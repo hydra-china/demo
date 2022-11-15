@@ -15,6 +15,10 @@ cache:
     - vendor/
     - node_modules/
 
+stages:
+  - test
+  - deploy
+
 before_script:
   # Install Node dependencies.
   - npm install
