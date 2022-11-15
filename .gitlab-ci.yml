@@ -21,6 +21,8 @@ before_script:
   # Install Node dependencies.
   # comment this out if you don't have a node dependency
   - npm install
+  # install composer dependencies
+  - composer install --prefer-dist --no-ansi --no-interaction --no-progress
   # Copy over example configuration.
   # Don't forget to set the database config in .env.example correctly
   - cp .env.example .env
