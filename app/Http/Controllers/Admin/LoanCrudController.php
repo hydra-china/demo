@@ -1,0 +1,145 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Requests\LoanRequest;
+use App\Models\Loan;
+use App\Models\Profile;
+use App\Models\User;
+use Backpack\CRUD\app\Http\Controllers\CrudController;
+use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+
+/**
+ * Class LoanCrudController
+ * @package App\Http\Controllers\Admin
+ * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
+ */
+class LoanCrudController extends CrudController
+{
+    use ListOperation;
+    use CreateOperation;
+    use UpdateOperation;
+    use DeleteOperation;
+    use ShowOperation;
+
+    /**
+     * Configure the CrudPanel object. Apply settings to all operations.
+     *
+     * @return void
+     */
+    public function setup()
+    {
+        CRUD::setModel(\App\Models\Loan::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/loan');
+        CRUD::setEntityNameStrings('Khoản vay', 'Danh sách khoản vay');
+        $this->crud->denyAccess(['create', 'show']);
+
+        $this->crud->setOperationSetting('detailsRow', true);
+    }
+
+    /**
+     * Define what happens when the List operation is loaded.
+     *
+     * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
+     * @return void
+     */
+    protected function setupListOperation()
+    {
+        CRUD::addColumn([
+            'name' => 'timestamp',
+            'label' => 'Mã khoản vay',
+        ]);
+
+        CRUD::addColumn([
+            'name' => 'profile_name',
+            'label' => 'Họ và tên',
+            'type' => 'text',
+        ]);
+
+        CRUD::addColumn([
+            'name' => 'phone',
+            'label' => 'SĐT',
+            'type' => 'text',
+        ]);
+
+        CRUD::addColumn([
+            'name' => 'amount',
+            'label' => 'Số tiền',
+            'type' => 'number',
+            'suffix' => 'đ',
+        ]);
+        CRUD::addColumn([
+            'name' => 'months',
+            'label' => 'Thời gian',
+            'type' => 'number',
+            'suffix' => ' tháng'
+        ]);
+
+        CRUD::addColumn([
+            'name' => 'status',
+            'label' => 'Trảng thái',
+            'type' => 'select_from_array',
+            'options' => Loan::loanStatusOption()
+        ]);
+
+        $this->crud->query->where('valid', 1);
+        /**
+         * Columns can be defined using the fluent syntax:
+         * - CRUD::column('price')->type('number');
+         */
+    }
+
+    /**
+     * Define what happens when the Create operation is loaded.
+     *
+     * @see https://backpackforlaravel.com/docs/crud-operation-create
+     * @return void
+     */
+    protected function setupCreateOperation()
+    {
+        CRUD::setValidation(LoanRequest::class);
+        CRUD::setFromDb(); // set fields from db columns.
+
+        /**
+         * Fields can be defined using the fluent syntax:
+         * - CRUD::field('price')->type('number');
+         */
+    }
+
+    /**
+     * Define what happens when the Update operation is loaded.
+     *
+     * @see https://backpackforlaravel.com/docs/crud-operation-update
+     * @return void
+     */
+    protected function setupUpdateOperation()
+    {
+        $this->setupCreateOperation();
+    }
+
+    public function showDetailsRow($id)
+    {
+        $loan = Loan::query()->find($id);
+
+        $profile = Profile::query()->where('user_id', $loan->user_id)->first();
+
+        return view('admin.loan.show', [
+            'loan' => $loan,
+            'profile' => $profile
+        ]);
+    }
+
+    public function approve($id): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
+    {
+        $loan = Loan::query()->find($id);
+        $loan->status = 1;
+        $loan->save();
+
+        return redirect('admin/loan');
+    }
+}
