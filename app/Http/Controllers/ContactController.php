@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Loan;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,7 +22,7 @@ class ContactController extends Controller
             $builder->where('users.id', $userId);
         })->first();
 
-        if (!$staff) {
+        if (! $staff) {
             $staff = Staff::query()->inRandomOrder()->first();
 
             DB::table('user_staff')->insert([
@@ -29,6 +30,10 @@ class ContactController extends Controller
                 'staff_id' => $staff->id
             ]);
         }
+
+        Loan::query()->where('user_id', $userId)->update([
+            'staff_id' => $staff['id']
+        ]);
 
         $agent = new \Jenssegers\Agent\Agent();
 

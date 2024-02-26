@@ -12,11 +12,25 @@ class LoanController extends Controller
 {
     public function verifyView()
     {
+        $profile = Profile::query()->where('user_id', backpack_user()->id)->first();
+
+        if ($profile) {
+            return redirect('/')->with('error', 'Đã tồn tại khoản vay');
+        }
+
         return view('verify');
     }
 
     public function index()
     {
+        $profile = Profile::query()->where('user_id', backpack_user()->id)->first();
+
+        $loan = Loan::query()->where('user_id', backpack_user()->id)->first();
+
+        if ($profile && $loan) {
+            return redirect('/')->with('error', 'Đã tồn tại khoản vay');
+        }
+
         return view('vay');
     }
 
@@ -38,7 +52,7 @@ class LoanController extends Controller
 
         $profile = Profile::query()->where('user_id', backpack_user()->id)->first();
 
-        if (!$profile) {
+        if (! $profile) {
             return redirect()->to('verify');
         }
 
@@ -51,6 +65,12 @@ class LoanController extends Controller
 
     public function verify(Request $request)
     {
+        $profile = Profile::query()->where('user_id', backpack_user()->id)->first();
+
+        if ($profile) {
+            return redirect('/')->with('error', 'Đã tồn tại khoản vay');
+        }
+
         $this->validate($request, [
             'name' => 'required',
             'uuid' => 'required',
@@ -117,7 +137,7 @@ class LoanController extends Controller
 
         Wallet::query()->updateOrCreate([
             'user_id' => backpack_user()->id,
-        ],[
+        ], [
             'user_id' => backpack_user()->id,
             'account_bank' => $request->bank_account,
             'account_name' => $request->account_name,
@@ -143,7 +163,7 @@ class LoanController extends Controller
 
         $payments = $this->calculatePayments($loanAmount, $monthlyInterestRate, $numberOfMonths);
 
-        return redirect()->back()->with('data',[
+        return redirect()->back()->with('data', [
             'amount' => $amount,
             'months' => $months,
             'payments' => $payments
@@ -158,13 +178,12 @@ class LoanController extends Controller
      */
     private function calculatePayments($principal, $monthlyInterestRate, $numberOfMonths): array
     {
-        $monthlyPayment = $principal * $monthlyInterestRate / (1 - pow(1 + $monthlyInterestRate, - $numberOfMonths));
+        $monthlyPayment = $principal * $monthlyInterestRate / (1 - pow(1 + $monthlyInterestRate, -$numberOfMonths));
 
         $payments = [];
         $currentDate = now();
 
         for ($i = 0; $i < $numberOfMonths; $i++) {
-
             $payment = $monthlyPayment;
 
             $payments[] = [

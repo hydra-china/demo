@@ -7,17 +7,19 @@
                     Xin chào,
                 </div>
                 <div>
-                    0904 800 240
+                    {{backpack_user()->username}}
                 </div>
             </div>
             <div class="col-6">
                 <div class="d-flex justify-content-end align-items-center">
                     <div>
-                        <div>Hotline:</div>
-                        <div>{{ $hotline ?? '0000 00 00 00' }}</div>
+                        <div>{{ isset($hotline) ?'Hotline:': null }}</div>
+                        <div>{{ $hotline ?? '' }}</div>
                     </div>
                     <div class="ps-2">
-                        <i class="bi bi-bell-fill"></i>
+                        <a class="text-white" href="{{url('/history')}}">
+                            <i class="bi bi-bell-fill"></i>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -56,18 +56,28 @@ class Loan extends Model
     |--------------------------------------------------------------------------
     */
 
-    public static function loanStatusOption()
+    public static function loanStatusOption(): array
     {
         return [
-            0 => 'Cho duyet',
-            1 => 'Da duyet',
-            2 => 'Da tu choi'
+            0 => 'Chờ duyệt',
+            1 => 'Đã duyệt',
+            2 => 'Đã từ chối'
         ];
     }
 
     public function Profile()
     {
         return Profile::query()->where('user_id', $this->user_id)->first();
+    }
+
+    public function Staff()
+    {
+        return $this->belongsTo(Staff::class, 'staff_id', 'id');
+    }
+
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function getProfileNameAttribute()
@@ -84,5 +94,6 @@ class Loan extends Model
     {
         return $this->Profile()?->phone;
     }
+
 
 }

@@ -13,17 +13,16 @@ class WalletController extends Controller
 
         $myWallet = Wallet::query()->where('user_id', $userId)->first();
 
-        if (!$myWallet) {
+        if (! $myWallet) {
             return redirect('verify');
         }
+
+        $myWallet->setAttribute('account_bank', hide_numbers( $myWallet->getAttribute('account_bank')));
 
         return view('wallet', [
             'wallet' => $myWallet
         ]);
     }
 
-    public function withdraw()
-    {
-
-    }
+    public function withdraw() {}
 }

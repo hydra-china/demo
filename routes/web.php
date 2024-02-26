@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,4 +38,8 @@ Route::middleware(['client'])->group(function () {
     Route::get('/contact', [ContactController::class, 'contactCSKH']);
 
     Route::get('/wallet', [WalletController::class, 'index']);
+    Route::get('/history', [NotificationController::class, 'list']);
+    Route::get('/profile', [ProfileController::class, 'index']);
+    Route::get('/user-detail', [ProfileController::class, 'detail']);
+    Route::get('/user-contract/{back?}/{next?}', [ProfileController::class, 'contract']);
 });

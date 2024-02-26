@@ -17,6 +17,8 @@ class Notification extends Model
     |--------------------------------------------------------------------------
     */
 
+    const PLUS = 1;
+    const MINUS = 2;
     protected $table = 'notifications';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
@@ -36,7 +38,10 @@ class Notification extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

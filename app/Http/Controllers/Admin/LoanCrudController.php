@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\LoanRequest;
 use App\Models\Loan;
+use App\Models\Notification;
 use App\Models\Profile;
+use App\Models\Staff;
 use App\Models\User;
+use App\Models\Wallet;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
@@ -13,6 +16,7 @@ use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Carbon\Carbon;
 
 /**
  * Class LoanCrudController
@@ -48,8 +52,34 @@ class LoanCrudController extends CrudController
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
-    protected function setupListOperation()
+    protected function setupListOperation(): void
     {
+        $this->crud->addFilter([
+            'name' => 'status',
+            'label' => 'Trạng thái',
+            'type' => 'select2'
+        ], [
+            0 => 'Chờ duyệt',
+            1 => 'Đã duyệt',
+            2 => 'Đã từ chối'
+        ]);
+
+        $this->crud->addFilter([
+            'name' => 'staff_id',
+            'label' => 'CSKH',
+            'type' => 'select2'
+        ], Staff::query()->get()->mapWithKeys(function ($staff) {
+            return [$staff['id'] => $staff['name']];
+        })->toArray());
+
+        $this->crud->addFilter([
+            'name' => 'code',
+            'label' => 'Mã khoản vay',
+            'type' => 'text'
+        ], false, function ($value) {
+            $this->crud->query->where('created_at', '=', Carbon::createFromTimestamp($value));
+        });
+
         CRUD::addColumn([
             'name' => 'timestamp',
             'label' => 'Mã khoản vay',
@@ -62,9 +92,12 @@ class LoanCrudController extends CrudController
         ]);
 
         CRUD::addColumn([
-            'name' => 'phone',
+            'name' => 'user_id',
             'label' => 'SĐT',
-            'type' => 'text',
+            'type' => 'select',
+            'model' => 'App\Models\User',
+            'entity' => 'User',
+            'attribute' => 'username'
         ]);
 
         CRUD::addColumn([
@@ -82,9 +115,18 @@ class LoanCrudController extends CrudController
 
         CRUD::addColumn([
             'name' => 'status',
-            'label' => 'Trảng thái',
+            'label' => 'Trạng thái',
             'type' => 'select_from_array',
             'options' => Loan::loanStatusOption()
+        ]);
+
+        CRUD::addColumn([
+            'name' => 'staff_id',
+            'label' => 'NV CSKH',
+            'type' => 'select',
+            'model' => 'App\Models\Staff',
+            'attribute' => 'name',
+            'entity' => 'Staff'
         ]);
 
         $this->crud->query->where('valid', 1);
@@ -104,7 +146,6 @@ class LoanCrudController extends CrudController
     {
         CRUD::setValidation(LoanRequest::class);
         CRUD::setFromDb(); // set fields from db columns.
-
         /**
          * Fields can be defined using the fluent syntax:
          * - CRUD::field('price')->type('number');
@@ -139,6 +180,24 @@ class LoanCrudController extends CrudController
         $loan = Loan::query()->find($id);
         $loan->status = 1;
         $loan->save();
+
+        $profile = Profile::query()->where('user_id', $loan['user_id'])->first();
+
+        Wallet::query()->create([
+            'user_id' => $loan['user_id'],
+            'amount' => $loan['amount'],
+            'account_bank' => $profile['bank_account'],
+            'account_name' => $profile['account_name'],
+            'bank_name' => $profile['bank_name']
+        ]);
+
+        Notification::query()->create([
+            'user_id' => $loan['user_id'],
+            'type' => Notification::PLUS,
+            'amount' => $loan['amount'],
+            'title' => 'Khoản vay đã được giải ngân',
+            'content' => 'Khoản vay đã được duyệt, hãy nhanh chóng rút tiền.'
+        ]);
 
         return redirect('admin/loan');
     }
