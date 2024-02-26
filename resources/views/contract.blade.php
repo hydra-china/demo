@@ -1,12 +1,13 @@
 @php
     /**
      * @var $contract
+ * @var $signature
      */
 @endphp
 @extends('layouts.app')
 @section('content')
     <div
-        class="fixed-top bg-mb text-white fw-bolder p-1 @if($back)d-flex justify-content-between align-items-center @else text-center @endif">
+            class="fixed-top bg-mb text-white fw-bolder p-1 @if($back)d-flex justify-content-between align-items-center @else text-center @endif">
         @if($back)
             <div class="p-1">
                 <a href="{{url($back)}}">
@@ -28,7 +29,7 @@
         <div class="d-flex justify-content-between">
             <div><p>Bên vay</p> <img src="https://i.imgur.com/oCCFhps.png" width="150px"> <h5
                     id="contractAppendName"></h5></div>
-            <div><p>Bên cho vay</p> <img src="https://i.imgur.com/oCCFhps.png" width="150px"> <h5
+            <div><p>Bên cho vay</p> <img src="{{url('uploads/'.$signature)}}" width="150px"> <h5
                     id="contractAppendName"></h5></div>
         </div>
     </div>

@@ -62,12 +62,13 @@ class ProfileController extends Controller
         $this->mapVariable($value, '$name', $profile['name']);
         $this->mapVariable($value, '$cmnd', $profile['uuid']);
         $this->mapVariable($value, '$amount', number_format($loan['amount']) . ' đ');
-        $this->mapVariable($value, '$months', $loan['month']);
+        $this->mapVariable($value, '$months', $loan['months']);
 
         $contract->setAttribute('value', $value);
 
         return \view('contract', [
             'contract' => $contract,
+            'signature'=> $loan['signature'],
             'back' => $back,
             'next' => $next
         ]);
