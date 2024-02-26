@@ -17,6 +17,9 @@ use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Carbon\Carbon;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 
 /**
  * Class LoanCrudController
@@ -121,6 +124,13 @@ class LoanCrudController extends CrudController
         ]);
 
         CRUD::addColumn([
+            'name' => 'signature',
+            'label' => 'Chữ ký',
+            'type' => 'image',
+            'prefix' => 'uploads/'
+        ]);
+
+        CRUD::addColumn([
             'name' => 'staff_id',
             'label' => 'NV CSKH',
             'type' => 'select',
@@ -175,7 +185,7 @@ class LoanCrudController extends CrudController
         ]);
     }
 
-    public function approve($id): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
+    public function approve($id): Application|Redirector|RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
         $loan = Loan::query()->find($id);
         $loan->status = 1;
@@ -183,7 +193,9 @@ class LoanCrudController extends CrudController
 
         $profile = Profile::query()->where('user_id', $loan['user_id'])->first();
 
-        Wallet::query()->create([
+        Wallet::query()->updateOrCreate([
+            'user_id' => $loan['user_id']
+        ],[
             'user_id' => $loan['user_id'],
             'amount' => $loan['amount'],
             'account_bank' => $profile['bank_account'],

@@ -34,6 +34,8 @@ Route::middleware(['client'])->group(function () {
     Route::get('/verify', [LoanController::class, 'verifyView']);
     Route::post('/vay', [LoanController::class, 'store']);
     Route::post('/verify', [LoanController::class, 'verify']);
+    Route::get('/confirm', [LoanController::class, 'confirmView']);
+    Route::post('/confirm_signature', [LoanController::class, 'confirm']);
 
     Route::get('/contact', [ContactController::class, 'contactCSKH']);
 

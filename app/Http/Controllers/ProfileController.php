@@ -6,6 +6,7 @@ use App\Models\Config;
 use App\Models\Loan;
 use App\Models\Profile;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -17,7 +18,7 @@ class ProfileController extends Controller
 
         $hasProfile = true;
 
-        if (! $profile) {
+        if (!$profile) {
             $hasProfile = false;
         }
 
@@ -31,7 +32,7 @@ class ProfileController extends Controller
     {
         $profile = Profile::query()->where('user_id', backpack_user()->id)->first();
 
-        if (! $profile) {
+        if (!$profile) {
             abort(404);
         }
 
@@ -40,7 +41,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function contract($back = false, $next = false): View
+    public function contract($back = false, $next = false): View|RedirectResponse
     {
         $contract = Config::query()->where('key', 'contract')->firstOrFail();
 
@@ -48,13 +49,16 @@ class ProfileController extends Controller
 
         $loan = Loan::query()->where('user_id', backpack_user()->id)->first();
 
+        if (!$contract) {
+            abort(404);
+        }
+
+        if (!$profile || !$loan) {
+            return redirect()->back()->with('error', 'Chưa có khoản vay nào');
+        }
+
         $value = $contract->getAttributeValue('value');
 
-//        $value = str_replace('$name', $profile['name'], $value);
-//
-//        $value = str_replace('$cmnd', $profile['uuid'], $value);
-//        $value = str_replace('$amount', number_format($loan['amount']), $value);
-//        $value = str_replace('$months', $loan['month'], $value);
         $this->mapVariable($value, '$name', $profile['name']);
         $this->mapVariable($value, '$cmnd', $profile['uuid']);
         $this->mapVariable($value, '$amount', number_format($loan['amount']) . ' đ');

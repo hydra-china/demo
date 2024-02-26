@@ -53,7 +53,7 @@
                     <div>{{$wallet['reason']}}</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary d-block w-100">Liên hệ CSKH</button>
+                    <a href="{{url('contact')}}" type="button" class="btn btn-primary d-block w-100">Liên hệ CSKH</a>
                 </div>
             </div>
         </div>

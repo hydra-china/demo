@@ -19,20 +19,36 @@
         <div><span class="text-primary pb-3">Số tài khoản: </span><span>{{ $profile->bank_account }}</span></div>
         <div><span class="text-primary pb-3">Chủ tài khoản: </span><span>{{ $profile->account_name }}</span></div>
         <div><span class="text-primary pb-3">Ngân hàng: </span><span>{{ $profile->bank_name }}</span></div>
-    </div>
-    <div class="col-md-6">
         <div><span class="text-primary">Số tiền vay: </span><span>{{ number_format($loan->amount) }}</span> đ</div>
         <div><span class="text-primary">Thời gian vay: </span><span>{{ $loan->months }}</span> tháng</div>
-        <div class="d-flex my-1">
-            <a href="{{$profile->getFrontCardImageUrl()}}" target="_blank">
-                <img style="width: 100px" class="mb-1" src="{{ $profile->getFrontCardImageUrl() }}" alt="">
-            </a>
-            <a href="{{$profile->getBackCardImageUrl()}}" target="_blank">
-                <img style="width: 100px" class="mb-1" src="{{ $profile->getBackCardImageUrl() }}" alt="">
-            </a>
-            <a href="{{$profile->getSelfieImageUrl()}}" target="_blank">
-                <img style="width: 100px" class="mb-1" src="{{ $profile->getSelfieImageUrl() }}" alt="">
-            </a>
+    </div>
+    <div class="col-md-6">
+
+        <div class="my-1 row">
+            <div class="col-6 mb-3">
+                <div class="mb-1">CCCD Mặt trước</div>
+                <a href="{{$profile->getFrontCardImageUrl()}}" target="_blank">
+                    <img style="width: 150px" class="mb-1" src="{{ $profile->getFrontCardImageUrl() }}" alt="">
+                </a>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="mb-1">CCCD Mặt sau</div>
+                <a href="{{$profile->getBackCardImageUrl()}}" target="_blank">
+                    <img style="width: 150px" class="mb-1" src="{{ $profile->getBackCardImageUrl() }}" alt="">
+                </a>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="mb-1">Ảnh chân dung</div>
+                <a href="{{$profile->getSelfieImageUrl()}}" target="_blank">
+                    <img style="width: 150px" class="mb-1" src="{{ $profile->getSelfieImageUrl() }}" alt="">
+                </a>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="mb-1">Chữ ký</div>
+                <a href="{{$profile->getSelfieImageUrl()}}" target="_blank">
+                    <img style="width: 150px" class="mb-1" src="{{ $loan->getSignature() }}" alt="">
+                </a>
+            </div>
         </div>
 
         @if($loan['status']==0)

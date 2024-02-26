@@ -95,5 +95,8 @@ class Loan extends Model
         return $this->Profile()?->phone;
     }
 
-
+    public function getSignature()
+    {
+        return url('/uploads/') . '/' . $this->{'signature'};
+    }
 }

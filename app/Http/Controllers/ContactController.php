@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Jenssegers\Agent\Facades\Agent;
 
 class ContactController extends Controller
@@ -22,7 +23,7 @@ class ContactController extends Controller
             $builder->where('users.id', $userId);
         })->first();
 
-        if (! $staff) {
+        if (!$staff) {
             $staff = Staff::query()->inRandomOrder()->first();
 
             DB::table('user_staff')->insert([
@@ -43,6 +44,6 @@ class ContactController extends Controller
             $link = $staff->{'link_android'};
         }
 
-        return redirect()->to($link);
+        return redirect()->back()->with('redirect', $link);
     }
 }

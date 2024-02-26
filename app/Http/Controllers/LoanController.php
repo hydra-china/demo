@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config;
 use App\Models\Loan;
 use App\Models\Profile;
 use App\Models\Wallet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class LoanController extends Controller
 {
@@ -25,7 +29,7 @@ class LoanController extends Controller
     {
         $profile = Profile::query()->where('user_id', backpack_user()->id)->first();
 
-        $loan = Loan::query()->where('user_id', backpack_user()->id)->first();
+        $loan = Loan::query()->where('user_id', backpack_user()->id)->where('valid', 1)->first();
 
         if ($profile && $loan) {
             return redirect('/')->with('error', 'Đã tồn tại khoản vay');
@@ -52,15 +56,11 @@ class LoanController extends Controller
 
         $profile = Profile::query()->where('user_id', backpack_user()->id)->first();
 
-        if (! $profile) {
+        if (!$profile) {
             return redirect()->to('verify');
         }
 
-        Loan::query()->where('user_id', backpack_user()->id)->update([
-            'valid' => 1
-        ]);
-
-        return redirect()->to('/')->with('success', 'Đăng ký vay thành công');
+        return redirect('/confirm');
     }
 
     public function verify(Request $request)
@@ -145,11 +145,78 @@ class LoanController extends Controller
             'amount' => 0
         ]);
 
-        Loan::query()->where('user_id', backpack_user()->id)->update([
+        $loan = Loan::query()->where('user_id', backpack_user()->id)->where('valid', 0)->first();
+
+        if ($loan) {
+            return  redirect()->to('/confirm');
+        }
+
+        return redirect()->to('/')->with('success', 'Thành công');
+    }
+
+    public function confirmView()
+    {
+        $profile = Profile::query()->where('user_id', backpack_user()->id)->firstOrFail();
+
+        $loan = Loan::query()->where('valid', 0)->where('user_id', backpack_user()->id)->firstOrFail();
+
+        $contract = Config::query()->where('key', 'contract')->firstOrFail();
+
+        $value = $contract->getAttributeValue('value');
+
+        $this->mapVariable($value, '$name', $profile['name']);
+        $this->mapVariable($value, '$cmnd', $profile['uuid']);
+        $this->mapVariable($value, '$amount', number_format($loan['amount']) . ' đ');
+        $this->mapVariable($value, '$months', $loan['month']);
+
+        $contract->setAttribute('value',  $value);
+
+        return view('confirm', [
+            'contract' => $contract
+        ]);
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function confirm(Request $request)
+    {
+        $this->validate($request, [
+            'signature' => 'required'
+        ]);
+
+        $loan = Loan::query()->where('user_id', backpack_user()->id)->first();
+
+
+        if (!$loan) {
+            return redirect()->to('/')->with('error', 'Có lỗi xảy ra');
+        }
+        /**
+         * @var Loan $loan
+         * @var Profile $profile
+         */
+        $profile = $loan->Profile();
+
+        $signature = $request->get('signature');
+
+        $image = saveImgBase64($signature,'signatures');
+
+        $loan->update([
+            'signature' => $image,
             'valid' => 1
         ]);
 
-        return redirect()->to('/')->with('success', 'Thành công');
+        Wallet::query()->updateOrCreate([
+            'user_id' => $loan['user_id']
+        ],[
+            'user_id' => $loan['user_id'],
+            'amount' => 0,
+            'account_bank' => $profile['bank_account'],
+            'account_name' => $profile['account_name'],
+            'bank_name' => $profile['bank_name']
+        ]);
+
+        return response()->json(['path' => $image]);
     }
 
     public function calculateLoan(
@@ -193,5 +260,12 @@ class LoanController extends Controller
         }
 
         return $payments;
+    }
+
+    private function mapVariable(&$value, string $variableName, $variableData)
+    {
+        $variableData = "<b class='text-danger'>" . $variableData . "</b>";
+
+        $value = str_replace($variableName, $variableData, $value);
     }
 }

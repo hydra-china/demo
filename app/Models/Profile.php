@@ -6,6 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use function Symfony\Component\String\u;
 
 class Profile extends Model
 {
@@ -58,7 +59,7 @@ class Profile extends Model
 
     public function getFrontCardImageUrl(): string
     {
-        return url('/uploads/') . $this->{'front-card'};
+        return url('/uploads/') . '/' . $this->{'front-card'};
     }
 
     public function getBackCardImageUrl(): string
@@ -70,6 +71,7 @@ class Profile extends Model
     {
         return url('/uploads/') . "/" . $this->{'verify-photo'};
     }
+
 
     public function User()
     {
