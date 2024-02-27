@@ -34,7 +34,8 @@
 @if(session('redirect'))
     <script>
         window.addEventListener("load", (event) => {
-            window.open('{{url(session('redirect'))}}', "_blank")
+            // window.open('{{url(session('redirect'))}}', "_blank")
+            window.location.href="{{session('redirect')}}"
         });
     </script>
 @endif
