@@ -46,8 +46,8 @@ class UserStaffCrudController extends CrudController
             'label' => 'Số điện thoại',
             'type' => 'text',
         ], false, function ($value) {
-            $this->crud->query->whereHas('user', function (Builder $builder) use ($value) {
-                $this->crud->query->where('username', 'like', "%$value%");
+            $this->crud->query->whereHas('User', function (Builder  $builder) use ($value) {
+                $builder->where('username', 'like', "%$value%");
             });
         });
         CRUD::addColumn([
