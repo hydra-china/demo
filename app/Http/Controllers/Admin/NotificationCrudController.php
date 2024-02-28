@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Operations\FetchOperation;
 use App\Http\Requests\NotificationRequest;
 use App\Models\Notification;
+use App\Models\User;
 use App\Models\Wallet;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
+
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Backpack\CRUD\app\Library\Widget;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class NotificationCrudController
@@ -22,6 +28,7 @@ class NotificationCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use FetchOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -30,9 +37,15 @@ class NotificationCrudController extends CrudController
      */
     public function setup()
     {
+        $type = $this->crud->getRequest()->get('type') ?? 'add';
         CRUD::setModel(\App\Models\Notification::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/notification');
-        CRUD::setEntityNameStrings('Thông báo nạp tiền', 'Thông báo nạp tiền');
+        if ($type == 'add') {
+            CRUD::setEntityNameStrings('Nạp tiền', 'Nạp tiền');
+        }else{
+            CRUD::setEntityNameStrings('Trừ tiền', 'Trừ tiền');
+        }
+
     }
 
     /**
@@ -43,6 +56,16 @@ class NotificationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        Widget::add(
+            [
+                'type' => 'view',
+                'view' => 'admin.loan.dashboard-head',
+                'tab' => 'notification',
+            ]
+        );
+        $this->crud->removeButton('create');
+        $this->crud->addButtonFromModelFunction('top', 'addMoney', 'addMoneyButton');
+        $this->crud->addButtonFromModelFunction('top', 'minusMoney', 'minusMoneyButton');
         CRUD::column('title')->type('text')->label('Tiêu đề');
         CRUD::column('content')->type('text')->label('Nội dung');
         CRUD::column('amount')->type('number')->label('Số tiền')->suffix(' đ');
@@ -54,6 +77,22 @@ class NotificationCrudController extends CrudController
          */
     }
 
+    public function fetchUser()
+    {
+        return $this->fetch([
+            'model' => User::class,
+            'query' => function (Model $model) {
+                $search = request()->input('q') ?? false;
+
+                if ($search) {
+                    return $model->newQuery()->where('username', 'like', "%$search%")->where('email', '=', null);
+                }
+
+                return $model;
+            }
+        ]);
+    }
+
     /**
      * Define what happens when the Create operation is loaded.
      *
@@ -62,26 +101,9 @@ class NotificationCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
+        $type = $this->crud->getRequest()->get('type') ?? 'add';
+
         CRUD::setValidation(NotificationRequest::class);
-
-        CRUD::addField([
-            'name' => 'title',
-            'label' => 'Tiêu đề thông báo',
-        ]);
-
-        CRUD::addField([
-            'name' => 'content',
-            'label' => 'Nội dung thông báo',
-        ]);
-
-        CRUD::addField([
-            'name' => 'user_id',
-            'type' => 'select',
-            'entity' => 'User',
-            'label' => 'Người dùng',
-            'model' => 'App\Models\User',
-            'attribute' => 'username'
-        ]);
 
         CRUD::addField([
             'name' => 'amount',
@@ -90,8 +112,38 @@ class NotificationCrudController extends CrudController
         ]);
 
         CRUD::addField([
+            'name' => 'title',
+            'label' => 'Tiêu đề thông báo',
+            'type' => 'hidden',
+            'value' => ''
+        ]);
+
+        CRUD::addField([
+            'name' => 'title',
+            'type' => 'textarea',
+            'label' => 'Lý do từ chối',
+        ]);
+
+        CRUD::addField([
+            'name' => 'content',
+            'type' =>'hidden',
+            'value' => '...'
+        ]);
+
+        CRUD::addField([
+            'name' => 'user_id',
+            'type' => 'relationship',
+            'entity' => 'User',
+            'label' => 'Người dùng (Số điện thoại)',
+            'model' => 'App\Models\User',
+            'attribute' => 'username',
+            'ajax' => true
+        ]);
+
+        CRUD::addField([
             'name' => 'type',
             'label' => 'Loại',
+            'value' => $type == 'add' ? 1 : 2,
             'type' => 'select_from_array',
             'options' => [
                 1 => 'Cộng tiền',

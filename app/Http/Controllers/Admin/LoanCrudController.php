@@ -16,7 +16,9 @@ use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Backpack\CRUD\app\Library\Widget;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -43,9 +45,9 @@ class LoanCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Loan::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/loan');
-        CRUD::setEntityNameStrings('Khoản vay', 'Danh sách khoản vay');
+        CRUD::setEntityNameStrings('Khoản vay', 'Các Khoản vay');
         $this->crud->denyAccess(['create', 'show']);
-
+//        $this->crud->addButtonFromModelFunction();
         $this->crud->setOperationSetting('detailsRow', true);
     }
 
@@ -57,6 +59,37 @@ class LoanCrudController extends CrudController
      */
     protected function setupListOperation(): void
     {
+        Widget::add(
+            [
+                'type' => 'view',
+                'view' => 'admin.loan.dashboard-head',
+                'tab' => 'loan',
+            ]
+        );
+
+        Widget::add([
+            'type' => 'view',
+            'view' => 'admin.loan.statistic',
+            'data' => [
+                'total' => Loan::query()->count(),
+                'waiting' => Loan::query()->where('status', 0)->count(),
+                'accept' => Loan::query()->where('status', 1)->count(),
+                'deny' => Loan::query()->where('status', 2)->count()
+            ]
+        ]);
+
+        $this->crud->addFilter([
+            'name' => 'profile_name',
+            'label' => 'Họ và tên',
+            'type' => 'text'
+        ], false, function ($value) {
+            $this->crud->query->whereHas('user', function (Builder $user) use ($value) {
+                $user->whereHas('profile', function (Builder $profile) use ($value) {
+                    $profile->where('name', 'like', "%$value%");
+                });
+            });
+        });
+
         $this->crud->addFilter([
             'name' => 'status',
             'label' => 'Trạng thái',
@@ -185,7 +218,7 @@ class LoanCrudController extends CrudController
         ]);
     }
 
-    public function approve($id): Application|Redirector|RedirectResponse|\Illuminate\Contracts\Foundation\Application
+    public function approve($id)
     {
         $loan = Loan::query()->find($id);
         $loan->status = 1;
@@ -195,7 +228,7 @@ class LoanCrudController extends CrudController
 
         Wallet::query()->updateOrCreate([
             'user_id' => $loan['user_id']
-        ],[
+        ], [
             'user_id' => $loan['user_id'],
             'amount' => $loan['amount'],
             'account_bank' => $profile['bank_account'],

@@ -1,6 +1,8 @@
 <?php
 
 use App\Helper\Bank;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('backpack_pro')) {
@@ -39,8 +41,7 @@ if (! function_exists('bank_info')) {
     }
 }
 
-
-if (!function_exists('saveImgBase64')) {
+if (! function_exists('saveImgBase64')) {
     function saveImgBase64($param, $folder): string
     {
         list($extension, $content) = explode(';', $param);
@@ -52,12 +53,42 @@ if (!function_exists('saveImgBase64')) {
 
         $checkDirectory = $storage->exists($folder);
 
-        if (!$checkDirectory) {
+        if (! $checkDirectory) {
             $storage->makeDirectory($folder);
         }
 
         $storage->put($folder . '/' . $fileName, base64_decode($content), 'public');
 
-        return $folder.'/'.$fileName;
+        return $folder . '/' . $fileName;
+    }
+}
+
+if (! function_exists('has_permission')) {
+    function has_permission($permissionName): bool
+    {
+        if (! backpack_auth()->check()) {
+            return false;
+        }
+
+        $userId = backpack_user()->id;
+
+        $user = User::query()->where('id', $userId);
+
+        if (backpack_user()->name == 'admin') {
+            return true;
+        }
+
+        $permission = DB::table('permissions')->where('key', $permissionName)->first();
+
+        $permissionExist = DB::table('department_permission')
+            ->where('department_id', $user->department_id)
+            ->where('permission_id', $permission->getAttribute('id'))
+            ->get();
+
+        if ($permissionExist) {
+            return true;
+        }
+
+        return false;
     }
 }

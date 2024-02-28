@@ -66,4 +66,14 @@ class Notification extends Model
             2 => 'Trừ tiền'
         ];
     }
+
+    public function addMoneyButton()
+    {
+        return view('button.add-money');
+    }
+
+    public function minusMoneyButton()
+    {
+        return view('button.minus-money');
+    }
 }
