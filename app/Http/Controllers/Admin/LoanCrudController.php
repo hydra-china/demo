@@ -46,7 +46,7 @@ class LoanCrudController extends CrudController
         CRUD::setModel(\App\Models\Loan::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/loan');
         CRUD::setEntityNameStrings('Khoản vay', 'Các Khoản vay');
-        $this->crud->denyAccess(['create', 'show']);
+        $this->crud->denyAccess(['create', 'show', 'update']);
 //        $this->crud->addButtonFromModelFunction();
         $this->crud->setOperationSetting('detailsRow', true);
     }
@@ -188,7 +188,7 @@ class LoanCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(LoanRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
+        CRUD::field('signature')->type('image')->label('Chữ ký')->prefix('/uploads/');
         /**
          * Fields can be defined using the fluent syntax:
          * - CRUD::field('price')->type('number');
