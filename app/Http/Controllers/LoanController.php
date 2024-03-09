@@ -8,6 +8,7 @@ use App\Models\Profile;
 use App\Models\Wallet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -166,9 +167,11 @@ class LoanController extends Controller
 
         $this->mapVariable($value, '$name', $profile['name']);
         $this->mapVariable($value, '$cmnd', $profile['uuid']);
-        $this->mapVariable($value, '$amount', number_format($loan['amount']) . ' đ');
+        $this->mapVariable($value, '$amount', number_format($loan['amount']) . ' ');
         $this->mapVariable($value, '$months', $loan['months']);
         $this->mapVariable($value, '$month', $loan['months']);
+        $this->mapVariable($value, '$code', $loan->getTimestampAttribute());
+        $this->mapVariable($value, '$datetime', Carbon::parse($loan->created_at)->isoFormat('hh:mm:ss DD/MM/YYYY'));
 
         $contract->setAttribute('value',  $value);
 
