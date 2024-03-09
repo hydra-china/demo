@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Loan;
 use App\Models\Profile;
+use App\Models\User;
 use App\Models\Wallet;
+use App\Models\Withdraw;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WalletController extends Controller
 {
@@ -28,7 +32,43 @@ class WalletController extends Controller
         ]);
     }
 
-    public function withdraw()
+    public function withdraw(Request $request)
     {
+        $amount = $request->get('amount');
+
+        $user = User::query()->where('id', backpack_user()->id)->firstOrFail();
+
+        $wallet = Wallet::query()->where('user_id', $user['id'])->firstOrFail();
+
+        Withdraw::query()->create([
+            'amount' => $amount,
+            'wallet_id' => $wallet['id'],
+            'phone' => $user['username'],
+            'status' => 0,
+        ]);
+
+    }
+
+    public function checkWithdraw(): JsonResponse
+    {
+        $user = User::query()->where('id', backpack_user()->id)->firstOrFail();
+
+        $wallet = Wallet::query()->where('user_id', $user['id'])->firstOrFail();
+
+        $withdraw = Withdraw::query()->where([
+            'wallet_id' => $wallet['id'],
+            'phone' => $user['phone'],
+            'status' => 0
+        ])->exists();
+
+        dd($withdraw);
+
+        if ($withdraw) {
+            return response()->json([], 400);
+        }
+
+        return response()->json([
+            'status' => 'oke'
+        ]);
     }
 }

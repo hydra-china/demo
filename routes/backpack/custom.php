@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\LoanCrudController;
+use App\Http\Controllers\Admin\WithdrawCrudController;
 use Illuminate\Support\Facades\Route;
 
 // --------------------------
@@ -17,9 +18,11 @@ Route::group([
     ),
     'namespace' => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
-    Route::get('/',function (){{
-        return redirect('admin/loan');
-    }});
+    Route::get('/', function () {
+        {
+            return redirect('admin/loan');
+        }
+    });
     Route::crud('loan', 'LoanCrudController');
     Route::get('loan/{id}/approve', [LoanCrudController::class, 'approve', 'id']);
     Route::get('loan/{id}/deny', [LoanCrudController::class, 'deny', 'id']);
@@ -33,4 +36,7 @@ Route::group([
     Route::crud('department', 'DepartmentCrudController');
     Route::crud('recharge', 'RechargeCrudController');
     Route::crud('user-staff', 'UserStaffCrudController');
+    Route::crud('withdraw', 'WithdrawCrudController');
+    Route::get('withdraw/approve/{id}', [WithdrawCrudController::class, 'approve', 'id']);
+    Route::get('withdraw/refuse/{id}', [WithdrawCrudController::class, 'refuse', 'id']);
 }); // this should be the absolute last line of this file

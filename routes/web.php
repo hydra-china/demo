@@ -41,6 +41,8 @@ Route::middleware(['client'])->group(function () {
     Route::get('/contact', [ContactController::class, 'contactCSKH']);
 
     Route::get('/wallet', [WalletController::class, 'index']);
+    Route::post('/wallet/withdraw', [WalletController::class, 'withdraw']);
+    Route::get('/wallet/check', [WalletController::class, 'checkWithdraw']);
     Route::get('/history', [NotificationController::class, 'list']);
     Route::get('/profile', [ProfileController::class, 'index']);
     Route::get('/user-detail', [ProfileController::class, 'detail']);
