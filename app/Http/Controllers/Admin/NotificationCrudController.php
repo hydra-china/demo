@@ -42,7 +42,7 @@ class NotificationCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/notification');
         if ($type == 'add') {
             CRUD::setEntityNameStrings('Nạp tiền', 'Nạp tiền');
-        }else{
+        } else {
             CRUD::setEntityNameStrings('Trừ tiền', 'Trừ tiền');
         }
 
@@ -66,10 +66,34 @@ class NotificationCrudController extends CrudController
         $this->crud->removeButton('create');
         $this->crud->addButtonFromModelFunction('top', 'addMoney', 'addMoneyButton');
         $this->crud->addButtonFromModelFunction('top', 'minusMoney', 'minusMoneyButton');
+        CRUD::addColumn([
+            'name' => 'phone',
+            'label' => 'Số điện thoại',
+            'type' => 'select',
+            'model' => 'App\Models\User',
+            'entity' => "User",
+            'attribute' => 'username'
+        ]);
         CRUD::column('title')->type('text')->label('Tiêu đề');
-        CRUD::column('content')->type('text')->label('Nội dung');
-        CRUD::column('amount')->type('number')->label('Số tiền')->suffix(' đ');
-        CRUD::column('type')->type('select_from_array')->options(Notification::typeOptions());
+//        CRUD::column('content')->type('text')->label('Nội dung');
+        CRUD::column('amount')->label('Loại')->type('number')->label('Số tiền')->suffix(' đ')->wrapper([
+            'class' => function ($crud, $column, $entry) {
+                if ($entry['type'] == 1) {
+                    return "text-success";
+                } else {
+                    return 'text-danger';
+                }
+            },
+        ]);
+        CRUD::column('type')->type('select_from_array')->options(Notification::typeOptions())->wrapper([
+            'class' => function ($crud, $column, $entry) {
+                if ($entry['type'] == 1) {
+                    return "text-success";
+                } else {
+                    return 'text-danger';
+                }
+            },
+        ]);
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -126,7 +150,7 @@ class NotificationCrudController extends CrudController
 
         CRUD::addField([
             'name' => 'content',
-            'type' =>'hidden',
+            'type' => 'hidden',
             'value' => '...'
         ]);
 
@@ -176,7 +200,7 @@ class NotificationCrudController extends CrudController
 
         $wallet = Wallet::query()->where('user_id', $notification['user_id'])->first();
 
-        if (! $wallet) {
+        if (!$wallet) {
             return redirect('/admin/notification');
         }
 
