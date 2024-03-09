@@ -8,6 +8,7 @@ use App\Models\Profile;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -64,6 +65,8 @@ class ProfileController extends Controller
         $this->mapVariable($value, '$amount', number_format($loan['amount']) . ' đ');
         $this->mapVariable($value, '$months', $loan['months']);
         $this->mapVariable($value, '$month', $loan['months']);
+        $this->mapVariable($value, '$code', $loan->getTimestampAttribute());
+        $this->mapVariable($value, '$datetime', Carbon::parse($loan->created_at)->isoFormat('hh:mm:ss DD/MM/YYYY'));
 
         $contract->setAttribute('value', $value);
 
