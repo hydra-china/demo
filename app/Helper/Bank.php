@@ -16,7 +16,7 @@ class Bank
                 'code' => 'VCB',
                 'label' => 'Ngân hàng Ngoại thương Việt Nam (Vietcombank)',
                 'image' => 'https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-Vietcombank.png',
-                'brand' => asset('img/logo/logo-ngan-hang-Vietcombank.png')
+                'branch' => asset('img/logo/logo-ngan-hang-Vietcombank.png')
             ],
             1 => [
                 'name' => 'VietinBank',
