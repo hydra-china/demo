@@ -17,11 +17,11 @@ class ClientAuthMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $agent = new Agent();
-
-        if (! $agent->isAndroidOS()) {
-           return redirect("/not-support");
-        }
+//        $agent = new Agent();
+//
+//        if (! $agent->isAndroidOS()) {
+//           return redirect("/not-support");
+//        }
 
         if (!backpack_auth()->check()) {
             return redirect('/login');
