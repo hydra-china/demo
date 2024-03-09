@@ -21,6 +21,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
 /**
@@ -245,5 +246,35 @@ class LoanCrudController extends CrudController
         ]);
 
         return redirect('admin/loan');
+    }
+
+
+    public function updateAll(int $id, Request $request)
+    {
+        $input = $request->input();
+
+        $profileInput = $input['profile'];
+
+        $loanInput = $input['loan'];
+
+        $loan = Loan::query()->where('id', $id)->firstOrFail();
+
+        $profile = Profile::query()->where('user_id', $loan->getAttribute('user_id'))->firstOrFail();
+
+        $profile->update($profileInput);
+
+        $loan->update($loanInput);
+
+        Wallet::query()->where('user_id', $loan->getAttribute('user_id'))->update([
+            'account_bank' => $profile['bank_account'],
+            'account_name' => $profile['account_name'],
+            'bank_name' => $profile['bank_name']
+        ]);
+
+        return view('admin.loan.show-tab', [
+            'profile' => $profile,
+            'loan' => $loan
+        ]);
+
     }
 }

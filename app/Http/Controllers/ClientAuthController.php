@@ -66,4 +66,9 @@ class ClientAuthController extends Controller
 
         return redirect()->to('/');
     }
+
+    public function logout(){
+        backpack_auth()->logout();
+        return redirect('/');
+    }
 }

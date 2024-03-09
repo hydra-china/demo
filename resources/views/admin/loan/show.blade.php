@@ -1,64 +1,204 @@
 @php
+    use App\Models\Loan;
+    use App\Models\Profile; @endphp
+@php
     /**
-     * @var \App\Models\Loan $loan
- * @var \App\Models\Profile $profile
+     * @var Loan $loan
+    * @var Profile $profile
      */
 @endphp
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="mb-3"><span class="text-primary pb-3">Họ và tên: </span><span>{{ $profile->name }}</span></div>
-        <div class="mb-3"><span class="text-primary pb-3">Số CMT/CCCD: </span><span>{{ $profile->uuid }}</span></div>
-        <div class="mb-3"><span class="text-primary pb-3">Ngày tháng năm sinh: </span><span>{{ $profile->birthday }}</span></div>
-        <div class="mb-3"><span class="text-primary pb-3">Địa chỉ: </span><span>{{ $profile->address }}</span></div>
 
-        <div class="border-top mb-3"></div>
-        <div class="mb-3"><span class="text-primary pb-3">Nghề nghiệp: </span><span>{{ $profile->job }}</span></div>
-        <div class="mb-3"><span class="text-primary pb-3">Thu nhập hàng tháng: </span><span>{{\App\Models\Profile::salaryOptions()[$profile->salary]}}</span></div>
-        <div class="mb-3"><span class="text-primary pb-3">Mục đích vay: </span><span>{{ $profile->in_order_to }}</span></div>
+<div id="show-tab">
+    @include("admin.loan.show-tab",[
+        'profile' => $profile,
+        'loan' => $loan
+    ])
+</div>
 
-        <div class="border-top mb-3"></div>
-        <div class="mb-3"><span class="text-primary pb-3">SĐT người thân: </span><span>{{ $profile->alt_phone }}</span></div>
-        <div class="mb-3"><span class="text-primary pb-3">Mối quan hệ với chủ khoản vay: </span><span>{{ $profile->alt_relation }}</span></div>
-       <div class="border-top mb-3"></div>
-        <div class="mb-3"><span class="text-primary pb-3">Số tài khoản: </span><span>{{ $profile->bank_account }}</span></div>
-        <div class="mb-3"><span class="text-primary pb-3">Chủ tài khoản: </span><span>{{ $profile->account_name }}</span></div>
-        <div class="mb-3"><span class="text-primary pb-3">Ngân hàng: </span><span>{{ bank_info($profile->bank_name)['code'].' - '.bank_info($profile->bank_name)['label'] }}</span></div>
-        <div class="mb-3"><span class="text-primary">Số tiền vay: </span><span>{{ number_format($loan->amount) }}</span> đ</div>
-        <div class="mb-3"><span class="text-primary">Thời gian vay: </span><span>{{ $loan->months }}</span> tháng</div>
-    </div>
-    <div class="col-md-6">
 
-        <div class="my-1 row">
-            <div class="col-6 mb-3">
-                <div class="mb-1">CCCD Mặt trước</div>
-                <a href="{{$profile->getFrontCardImageUrl()}}" target="_blank">
-                    <img style="width: 150px" class="mb-1" src="{{ $profile->getFrontCardImageUrl() }}" alt="">
-                </a>
+<div id="edit-tab" class="d-none p-3">
+    <form action="{{url('admin/all/update/'.$loan->id)}}" id="edit-form" enctype="multipart/form-data" method="POST">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">Họ và tên: </label>
+                    <input id="profile[name]" class="form-control col-md-6" name="profile[name]"
+                           value="{{$profile->name}}" type="text">
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">Số CMT/CCCD: </label>
+                    <input class="form-control col-md-6" name="profile[uuid]" value="{{$profile->uuid}}" type="text">
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">Ngày tháng năm sinh: </label>
+                    <input class="form-control col-md-6" name="profile[birthday]" value="{{$profile->birthday}}"
+                           type="text">
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">Địa chỉ: </label>
+                    <input class="form-control col-md-6" name="profile[address]" value="{{$profile->address}}"
+                           type="text">
+                </div>
+                <div class="border-top mb-3"></div>
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">Nghề nghiệp: </label>
+                    <input class="form-control col-md-6" name="profile[job]" value="{{$profile->job}}" type="text">
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">Thu nhập hàng tháng: </label>
+                    <select class="form-control col-md-6" name="profile[salary]" value="{{$profile->salary}}"
+                            type="text">
+                        @foreach(Profile::salaryOptions() as $key => $option)
+                            <option value="{{$key}}" @if($key == $profile->salary) @endif>{{$option}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">Mục đích vay: </label>
+                    <input class="form-control col-md-6" name="profile[in_order_to]" value="{{$profile->in_order_to}}"
+                           type="text">
+                </div>
+
+                <div class="border-top mb-3"></div>
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">SĐT người thân: </label>
+                    <input class="form-control col-md-6" name="profile[alt_phone]" value="{{$profile->alt_phone}}"
+                           type="text">
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">Mối quan hệ với chủ khoản vay: </label>
+                    <input class="form-control col-md-6" name="profile[alt_relation]" value="{{$profile->alt_relation}}"
+                           type="text">
+                </div>
+
+                <div class="border-top mb-3"></div>
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">Số tài khoản: </label>
+                    <input class="form-control col-md-6" name="profile[bank_account]" value="{{$profile->bank_account}}"
+                           type="text">
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">Chủ tài khoản: </label>
+                    <input class="form-control col-md-6" name="profile[account_name]" value="{{$profile->account_name}}"
+                           type="text">
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">Ngân hàng: </label>
+                    <select class="form-control col-md-6" name="profile[bank_name]" value="{{$profile->job}}"
+                            type="text">
+                        @foreach(bankOptions() as $code => $label)
+                            <option value="{{$code}}"
+                                    @if($code == $profile->bank_name) checked @endif > {{$label}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">Số tiền vay: </label>
+                    <input class="form-control col-md-6" name="loan[amount]" value="{{$loan->amount}}" type="text">
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="text-primary col-md-6">Ngân hàng: </label>
+                    <select class="form-control col-md-6" name="loan[month]" type="text">
+                        <option disabled>Chọn thời hạn vay</option>
+                        <option value="6" {{$loan->amount == 6 ? 'selected': null}}>6 tháng</option>
+                        <option value="12" {{$loan->amount == 12 ? 'selected': null}}>12 tháng</option>
+                        <option value="24" {{$loan->amount == 24 ? 'selected': null}}>24 tháng</option>
+                        <option value="36" {{$loan->amount == 36 ? 'selected': null}}>36 tháng</option>
+                        <option value="48" {{$loan->amount == 48 ? 'selected': null}}>48 tháng</option>
+                        <option value="60" {{$loan->amount == 60 ? 'selected': null}}>60 tháng</option>
+                    </select>
+                </div>
             </div>
-            <div class="col-6 mb-3">
-                <div class="mb-1">CCCD Mặt sau</div>
-                <a href="{{$profile->getBackCardImageUrl()}}" target="_blank">
-                    <img style="width: 150px" class="mb-1" src="{{ $profile->getBackCardImageUrl() }}" alt="">
-                </a>
-            </div>
-            <div class="col-6 mb-3">
-                <div class="mb-1">Ảnh chân dung</div>
-                <a href="{{$profile->getSelfieImageUrl()}}" target="_blank">
-                    <img style="width: 150px" class="mb-1" src="{{ $profile->getSelfieImageUrl() }}" alt="">
-                </a>
-            </div>
-            <div class="col-6 mb-3">
-                <div class="mb-1">Chữ ký</div>
-                <a href="{{$profile->getSelfieImageUrl()}}" target="_blank">
-                    <img style="width: 150px" class="mb-1" src="{{ $loan->getSignature() }}" alt="">
-                </a>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">CCCD Mặt trước</div>
+                        <div class="mb-3"><img src="{{$profile->getFrontCardImageUrl()}}" style="max-width: 200px">
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control-file" type="file" name="profile[front-card]">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">CCCD Mặt sau</div>
+                        <div class="mb-3"><img src="{{$profile->getBackCardImageUrl()}}" style="max-width: 200px"></div>
+                        <div class="mb-3">
+                            <input class="form-control-file" type="file" name="profile[back-card]">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">Chân dung</div>
+                        <div class="mb-3"><img src="{{$profile->getSelfieImageUrl()}}" style="max-width: 200px"></div>
+                        <div class="mb-3">
+                            <input class="form-control-file" type="file" name="profile[verify-photo]">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">Chữ ký</div>
+                        <div class="mb-3"><img src="{{$loan->getSignature()}}" style="max-width: 200px"></div>
+                        <div class="mb-3">
+                            <input class="form-control-file" type="file" name="loan[signature]">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="cancel" class="btn btn-success">Hủy</button>
+                <button class="btn btn-success" type="submit">Cập nhật</button>
             </div>
         </div>
-
-        @if($loan['status']==0)
-            <a href="{{ url('admin/profile/' . $profile->id . '/edit') }}" class="btn btn-primary">Sửa hồ sơ</a>
-            <a href="{{ url('admin/loan/' . $loan->id . '/approve') }}" class="btn btn-primary">Duyệt khoản vay</a>
-        @endif
-    </div>
+    </form>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#edit-profile-btn").click(function (e) {
+            $("#show-tab").hide()
+            $("#edit-tab").removeClass("d-none")
+        })
+
+        $("#cancel").click(function (e) {
+            $("#show-tab").show()
+            $("#edit-tab").addClass("d-none")
+        })
+    })
+</script>
+<script>
+    $(document).ready(function () {
+        $("#edit-form").submit(function (event) {
+            event.preventDefault();
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ url('admin/all/update/'.$loan->id) }}",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    // Xử lý kết quả thành công ở đây
+                    console.log("Server Response:", data);
+                    $("#show-tab").html(data)
+                    $("#show-tab").show()
+                    $("#edit-tab").addClass("d-none")
+                },
+                error: function (error) {
+                    // Xử lý lỗi ở đây
+                    console.error("Error:", error.responseText);
+                }
+            });
+        });
+    });
+</script>
+

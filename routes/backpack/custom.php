@@ -17,8 +17,12 @@ Route::group([
     ),
     'namespace' => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
+    Route::get('/',function (){{
+        return redirect('admin/loan');
+    }});
     Route::crud('loan', 'LoanCrudController');
     Route::get('loan/{id}/approve', [LoanCrudController::class, 'approve', 'id']);
+    Route::post('all/update/{id}', [LoanCrudController::class, 'updateAll', 'id']);
     Route::crud('profile', 'ProfileCrudController');
     Route::crud('staff', 'StaffCrudController');
     Route::crud('notification', 'NotificationCrudController');

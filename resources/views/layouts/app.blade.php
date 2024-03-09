@@ -39,5 +39,6 @@
         });
     </script>
 @endif
+@stack('after_scripts')
 </html>
 

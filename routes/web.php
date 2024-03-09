@@ -23,6 +23,7 @@ Route::get('/login', [\App\Http\Controllers\ClientAuthController::class, 'index'
 Route::get('/register', [\App\Http\Controllers\ClientAuthController::class, 'registerView']);
 Route::post('/login', [\App\Http\Controllers\ClientAuthController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\ClientAuthController::class, 'register']);
+Route::get('/logout', [\App\Http\Controllers\ClientAuthController::class, 'logout']);
 
 
 Route::middleware(['client'])->group(function () {

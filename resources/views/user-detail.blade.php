@@ -27,7 +27,7 @@
         </div>
         <div class="d-flex justify-content-between mb-1">
             <b>Ngày tháng năm sinh</b>
-            <div>{{ Carbon::parse($profile->birthday)->isoFormat('DD/MM/YYYY') }}</div>
+            <div>{{ $profile->birthday }}</div>
         </div>
         <div class="d-flex justify-content-between mb-1">
             <b>Địa chỉ</b>
