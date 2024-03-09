@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Jenssegers\Agent\Agent;
 
 class ClientAuthController extends Controller
 {
@@ -67,8 +68,19 @@ class ClientAuthController extends Controller
         return redirect()->to('/');
     }
 
-    public function logout(){
+    public function logout()
+    {
         backpack_auth()->logout();
         return redirect('/');
+    }
+
+    public function notSupport()
+    {
+        $agent = new Agent();
+
+        if ($agent->isAndroidOS()) {
+            return redirect('/');
+        }
+        return view("not-support");
     }
 }

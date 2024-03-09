@@ -24,7 +24,7 @@ Route::get('/register', [\App\Http\Controllers\ClientAuthController::class, 'reg
 Route::post('/login', [\App\Http\Controllers\ClientAuthController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\ClientAuthController::class, 'register']);
 Route::get('/logout', [\App\Http\Controllers\ClientAuthController::class, 'logout']);
-
+Route::get('/not-support', [\App\Http\Controllers\ClientAuthController::class,'notSupport']);
 
 Route::middleware(['client'])->group(function () {
     Route::get('/', function () {

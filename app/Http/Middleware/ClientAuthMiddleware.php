@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
 
 class ClientAuthMiddleware
 {
@@ -16,6 +17,12 @@ class ClientAuthMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        $agent = new Agent();
+
+        if (! $agent->isAndroidOS()) {
+           return redirect("/not-support");
+        }
+
         if (!backpack_auth()->check()) {
             return redirect('/login');
         }
