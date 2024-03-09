@@ -265,7 +265,7 @@ class LoanController extends Controller
 
     private function mapVariable(&$value, string $variableName, $variableData)
     {
-        $variableData = "<b class='text-danger'>" . $variableData . "</b>";
+        $variableData = "<b class='text-black'>" . $variableData . "</b>";
 
         $value = str_replace($variableName, $variableData, $value);
     }
