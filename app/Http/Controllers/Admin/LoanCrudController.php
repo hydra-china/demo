@@ -219,6 +219,14 @@ class LoanCrudController extends CrudController
         ]);
     }
 
+    public function deny($id) {
+        $loan = Loan::query()->find($id);
+        $loan->status = 2;
+        $loan->save();
+
+        return redirect('admin/loan');
+    }
+
     public function approve($id)
     {
         $loan = Loan::query()->find($id);

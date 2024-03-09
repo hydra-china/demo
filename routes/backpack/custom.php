@@ -22,6 +22,7 @@ Route::group([
     }});
     Route::crud('loan', 'LoanCrudController');
     Route::get('loan/{id}/approve', [LoanCrudController::class, 'approve', 'id']);
+    Route::get('loan/{id}/deny', [LoanCrudController::class, 'deny', 'id']);
     Route::post('all/update/{id}', [LoanCrudController::class, 'updateAll', 'id']);
     Route::crud('profile', 'ProfileCrudController');
     Route::crud('staff', 'StaffCrudController');

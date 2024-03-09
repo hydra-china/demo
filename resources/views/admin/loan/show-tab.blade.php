@@ -8,34 +8,34 @@
         <div class="mb-3"><span class="text-primary pb-3">Số CMT/CCCD: </span><span>{{ $profile->uuid }}</span>
         </div>
         <div class="mb-3"><span
-                class="text-primary pb-3">Ngày tháng năm sinh: </span><span>{{ $profile->birthday }}</span>
+                    class="text-primary pb-3">Ngày tháng năm sinh: </span><span>{{ $profile->birthday }}</span>
         </div>
         <div class="mb-3"><span class="text-primary pb-3">Địa chỉ: </span><span>{{ $profile->address }}</span></div>
 
         <div class="border-top mb-3"></div>
         <div class="mb-3"><span class="text-primary pb-3">Nghề nghiệp: </span><span>{{ $profile->job }}</span></div>
         <div class="mb-3"><span
-                class="text-primary pb-3">Thu nhập hàng tháng: </span><span>{{Profile::salaryOptions()[$profile->salary]}}</span>
+                    class="text-primary pb-3">Thu nhập hàng tháng: </span><span>{{Profile::salaryOptions()[$profile->salary]}}</span>
         </div>
         <div class="mb-3"><span
-                class="text-primary pb-3">Mục đích vay: </span><span>{{ $profile->in_order_to }}</span></div>
+                    class="text-primary pb-3">Mục đích vay: </span><span>{{ $profile->in_order_to }}</span></div>
 
         <div class="border-top mb-3"></div>
         <div class="mb-3"><span
-                class="text-primary pb-3">SĐT người thân: </span><span>{{ $profile->alt_phone }}</span></div>
+                    class="text-primary pb-3">SĐT người thân: </span><span>{{ $profile->alt_phone }}</span></div>
         <div class="mb-3"><span
-                class="text-primary pb-3">Mối quan hệ với chủ khoản vay: </span><span>{{ $profile->alt_relation }}</span>
+                    class="text-primary pb-3">Mối quan hệ với chủ khoản vay: </span><span>{{ $profile->alt_relation }}</span>
         </div>
         <div class="border-top mb-3"></div>
         <div class="mb-3"><span
-                class="text-primary pb-3">Số tài khoản: </span><span>{{ $profile->bank_account }}</span></div>
+                    class="text-primary pb-3">Số tài khoản: </span><span>{{ $profile->bank_account }}</span></div>
         <div class="mb-3"><span
-                class="text-primary pb-3">Chủ tài khoản: </span><span>{{ $profile->account_name }}</span></div>
+                    class="text-primary pb-3">Chủ tài khoản: </span><span>{{ $profile->account_name }}</span></div>
         <div class="mb-3"><span
-                class="text-primary pb-3">Ngân hàng: </span><span>{{ bank_info($profile->bank_name)['code'].' - '.bank_info($profile->bank_name)['label'] }}</span>
+                    class="text-primary pb-3">Ngân hàng: </span><span>{{ bank_info($profile->bank_name)['code'].' - '.bank_info($profile->bank_name)['label'] }}</span>
         </div>
         <div class="mb-3"><span
-                class="text-primary">Số tiền vay: </span><span>{{ number_format($loan->amount) }}</span> đ
+                    class="text-primary">Số tiền vay: </span><span>{{ number_format($loan->amount) }}</span> đ
         </div>
         <div class="mb-3"><span class="text-primary">Thời gian vay: </span><span>{{ $loan->months }}</span> tháng
         </div>
@@ -68,8 +68,11 @@
             </div>
         </div>
         <button id="edit-profile-btn" class="btn btn-primary">Sửa hồ sơ</button>
-        @if($loan['status']==0)
+        @if($loan['status']!=1)
             <a href="{{ url('admin/loan/' . $loan->id . '/approve') }}" class="btn btn-primary">Duyệt khoản vay</a>
+        @endif
+        @if($loan['status']!=2)
+            <a href="{{ url('admin/loan/' . $loan->id . '/deny') }}" class="btn btn-danger">Từ chối khoản vay</a>
         @endif
     </div>
 </div>
