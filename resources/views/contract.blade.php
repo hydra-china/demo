@@ -8,8 +8,7 @@
 @section('content')
     <style>
     </style>
-    <div
-            class="fixed-top bg-mb text-white fw-bolder p-1 @if($back)d-flex justify-content-between align-items-center @else text-center @endif">
+    <div class="fixed-top bg-mb text-white fw-bolder p-1 @if($back)d-flex justify-content-between align-items-center @else text-center @endif">
         @if($back)
             <div class="p-1">
                 <a href="{{url($back)}}">
