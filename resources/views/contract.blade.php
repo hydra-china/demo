@@ -30,13 +30,15 @@
         <img style="position: absolute;z-index: -1;top:5%" src="{{asset('img/bg-mb.jpg')}}" class="w-100">
         {!! $contract['value'] !!}
         <div class="d-flex justify-content-between">
-            <div>
-                <div class="text-center font-weight-bold mb-2">Bên cho vay</div>
-                <img src="{{asset('img/sign-mb.jpg')}}" width="150px"> <h5
-                        id="contractAppendName"></h5></div>
+
             <div>
                 <div class="text-center font-weight-bold mb-2">Bên vay</div>
-                <img src="{{url('uploads/'.$signature)}}" width="150px"> <h5
+                <img style="opacity: 0.7" src="{{url('uploads/'.$signature)}}" width="150px"> <h5
+                    id="contractAppendName"></h5></div>
+
+            <div>
+                <div class="text-center font-weight-bold mb-2">Bên cho vay</div>
+                <img style="opacity: 0.7" src="{{asset('img/sign-mb.jpg')}}" width="150px"> <h5
                     id="contractAppendName"></h5></div>
         </div>
     </div>
