@@ -1,11 +1,11 @@
-@php use Illuminate\Support\Carbon; @endphp
+@php use App\Models\Profile;use Illuminate\Support\Carbon; @endphp
 @extends("layouts.app")
 @section('content')
     <div class="bg-mb text-white fw-bolder p-1">
         <h3 class="my-2 text-center text-uppercase">Thông tin cá nhân</h3>
     </div>
     {{--    <div class="">--}}
-    {{--        <div class="text-primary pb-3">Thu nhập một tháng: </div><div>{{ $profile->salary }}</div>--}}
+
     {{--        <div class="text-primary pb-3">Mục đích vay: </div><div>{{ $profile->in_order_to }}</div>--}}
     {{--        <div class="text-primary pb-3">Địa chỉ: </div><div>{{ $profile->address }}</div>--}}
     {{--        <div class="text-primary pb-3">Số tài khoản: </div><div>{{ $profile->bank_account }}</div>--}}
@@ -33,6 +33,28 @@
             <b>Địa chỉ</b>
             <div>{{ $profile->address }}</div>
         </div>
+
+        <div class="d-flex justify-content-between mb-1">
+            <b>Thu nhập hàng tháng</b>
+            <div>{{ Profile::salaryOptions()[$profile->salary] }}</div>
+        </div>
+
+        <div class="d-flex justify-content-between mb-1">
+            <b>Mục đích vay</b>
+            <div>{{$profile->in_order_to }}</div>
+        </div>
+
+        <div class="d-flex justify-content-between mb-1">
+            <b>SĐT Người thân</b>
+            <div>{{$profile->alt_phone }}</div>
+        </div>
+
+        <div class="d-flex justify-content-between mb-1">
+            <b>Mối quan hệ</b>
+            <div>{{$profile->alt_relation }}</div>
+        </div>
+
+
         <div class="d-flex justify-content-between mb-1">
             <b>Số tài khoản</b>
             <div>{{ hide_numbers($profile->bank_account) }}</div>
