@@ -72,10 +72,10 @@ class LoanCrudController extends CrudController
             'type' => 'view',
             'view' => 'admin.loan.statistic',
             'data' => [
-                'total' => Loan::query()->count(),
-                'waiting' => Loan::query()->where('status', 0)->count(),
-                'accept' => Loan::query()->where('status', 1)->count(),
-                'deny' => Loan::query()->where('status', 2)->count()
+                'total' => Loan::query()->where('valid', 1)->count(),
+                'waiting' => Loan::query()->where('status', 0)->where('valid', 1)->count(),
+                'accept' => Loan::query()->where('status', 1)->where('valid', 1)->count(),
+                'deny' => Loan::query()->where('status', 2)->where('valid', 1)->count()
             ]
         ]);
 
