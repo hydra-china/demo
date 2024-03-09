@@ -96,10 +96,11 @@
                     <input type="text" name="account_name" class="form-control" id="name" placeholder="" required>
                 </div>
                 <div class="mb-3">
-                    <label for="salary" class="form-label">Chọn ngân hàng thụ hưởng</label>
-                    <select name="bank_name" class="form-select" aria-label="Chọn ngân hàng">
-                        @foreach(bankOptions() as $code => $label)
-                            <option value="{{$code}}"> {{$label}}</option>
+                    <label for="imageSelect" class="form-label">Chọn ngân hàng thụ hưởng</label>
+                    <select name="bank_name" id="imageSelect" class="form-control p-2">
+                        @foreach(bankOptionsWithIcon() as $code => $label)
+                            <option value="{{$code}}" data-image="{{$label['image']}}"><img
+                                        src="{{$label['image']}}"> {{$label['label']}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -111,6 +112,22 @@
     </form>
 @endsection
 @push("after_scripts")
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <style>
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            display: flex;
+            align-items: center;
+        }
+
+
+        img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+    </style>
     <script>
         function changeToTab2() {
             const front = $("input[name=front-card]").val()
@@ -199,7 +216,20 @@
 
 
         $(document).ready(function () {
+            $(document).ready(function() {
+                $('#imageSelect').select2({
+                    templateResult: formatState,
+                    templateSelection: formatState
+                });
 
+                function formatState (state) {
+                    console.log(state)
+                    if (!state.id) { return state.text; }
+                    return $(
+                        '<span><img src="' + state.element.dataset.image + '" class="img-flag" /> ' + state.text + '</span>'
+                    );
+                };
+            });
         })
     </script>
 @endpush

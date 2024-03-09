@@ -13,7 +13,7 @@
 <li class="nav-item nav-dropdown">
     <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon la la-user"></i> Tài khoản đăng ký</a>
     <ul class="nav-dropdown-items">
-        <li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon la la-list"></i>Khoản vay chờ giải ngân</a>
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('withdraw') }}"><i class="nav-icon la la-list"></i>Khoản vay chờ giải ngân</a>
         </li>
     </ul>
 </li>
@@ -24,9 +24,9 @@
     <ul class="nav-dropdown-items">
         <li class="nav-item"><a class="nav-link" href="{{backpack_url('admin')}}"><i class="nav-icon la la-list"></i>Quản
                 lý tài khoản</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{backpack_url('department')}}"><i
-                        class="nav-icon la la-list"></i>Quản lý vai trò</a></li>
-        <li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon la la-list"></i>Quản lý quyền hạn</a></li>
+{{--        <li class="nav-item"><a class="nav-link" href="{{backpack_url('department')}}"><i--}}
+{{--                        class="nav-icon la la-list"></i>Quản lý vai trò</a></li>--}}
+{{--        <li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon la la-list"></i>Quản lý quyền hạn</a></li>--}}
     </ul>
 </li>
 
@@ -38,5 +38,3 @@
         <li class="nav-item"><a class="nav-link" href="{{backpack_url('config')}}"><i class="nav-icon la la-list"></i>Cấu hình website</a></li>
     </ul>
 </li>
-
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('withdraw') }}"><i class="nav-icon la la-question"></i> Withdraws</a></li>

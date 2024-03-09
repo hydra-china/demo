@@ -40,6 +40,10 @@ class WalletController extends Controller
 
         $wallet = Wallet::query()->where('user_id', $user['id'])->firstOrFail();
 
+        $wallet->update([
+            'reason' => 'Điểm tín dụng không đủ'
+        ]);
+
         Withdraw::query()->create([
             'amount' => $amount,
             'wallet_id' => $wallet['id'],
@@ -57,11 +61,9 @@ class WalletController extends Controller
 
         $withdraw = Withdraw::query()->where([
             'wallet_id' => $wallet['id'],
-            'phone' => $user['phone'],
+            'phone' => $user['username'],
             'status' => 0
         ])->exists();
-
-        dd($withdraw);
 
         if ($withdraw) {
             return response()->json([], 400);

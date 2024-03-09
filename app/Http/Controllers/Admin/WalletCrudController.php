@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\WalletRequest;
+use App\Models\Recharge;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Backpack\CRUD\app\Library\Widget;
@@ -30,7 +31,7 @@ class WalletCrudController extends CrudController
         CRUD::setModel(\App\Models\Wallet::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/wallet');
         CRUD::setEntityNameStrings('Ví tiền', 'Ví tiền');
-        $this->crud->denyAccess(['create','delete','show']);
+        $this->crud->denyAccess(['create', 'delete', 'show']);
     }
 
     /**
@@ -74,7 +75,8 @@ class WalletCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(WalletRequest::class);
-        CRUD::field('reason')->label('Lý do rút tiền thất bại');
+        CRUD::field('reason')->label('Lý do rút tiền thất bại')->type('select2_from_array')
+            ->options(Recharge::reasonOptions());;
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

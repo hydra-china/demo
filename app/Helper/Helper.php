@@ -5,14 +5,14 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-if (! function_exists('backpack_pro')) {
+if (!function_exists('backpack_pro')) {
     function backpack_pro(): bool
     {
         return true;
     }
 }
 
-if (! function_exists('hide_numbers')) {
+if (!function_exists('hide_numbers')) {
     function hide_numbers($number, $numToKeepStart = 3, $numToKeepEnd = 3, $maskCharacter = '*'): array|string
     {
         $totalLength = strlen($number);
@@ -23,25 +23,39 @@ if (! function_exists('hide_numbers')) {
     }
 }
 
-if (! function_exists('bankOptions')) {
+if (!function_exists('bankOptions')) {
     function bankOptions(): array
     {
         foreach (Bank::all() as $maNganHang => $thongTinNganHang) {
-            $formattedArray[$maNganHang] = $thongTinNganHang['code'] . '-' . $thongTinNganHang['label'];
+            $formattedArray[$maNganHang] = "<b>AAA</b>" . $thongTinNganHang['code'] . '-' . $thongTinNganHang['label'];
         }
 
         return $formattedArray;
     }
 }
 
-if (! function_exists('bank_info')) {
+if (!function_exists('bankOptionsWithIcon')) {
+    function bankOptionsWithIcon(): array
+    {
+        foreach (Bank::all() as $maNganHang => $thongTinNganHang) {
+            $formattedArray[$maNganHang] = [
+                'label' => $thongTinNganHang['label'],
+                'image' => $thongTinNganHang['image']
+            ];
+        }
+
+        return $formattedArray;
+    }
+}
+
+if (!function_exists('bank_info')) {
     function bank_info($bankId): array
     {
         return Bank::all()[$bankId] ?? [];
     }
 }
 
-if (! function_exists('saveImgBase64')) {
+if (!function_exists('saveImgBase64')) {
     function saveImgBase64($param, $folder): string
     {
         list($extension, $content) = explode(';', $param);
@@ -53,7 +67,7 @@ if (! function_exists('saveImgBase64')) {
 
         $checkDirectory = $storage->exists($folder);
 
-        if (! $checkDirectory) {
+        if (!$checkDirectory) {
             $storage->makeDirectory($folder);
         }
 
@@ -63,10 +77,10 @@ if (! function_exists('saveImgBase64')) {
     }
 }
 
-if (! function_exists('has_permission')) {
+if (!function_exists('has_permission')) {
     function has_permission($permissionName): bool
     {
-        if (! backpack_auth()->check()) {
+        if (!backpack_auth()->check()) {
             return false;
         }
 
