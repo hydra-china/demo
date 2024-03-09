@@ -16,14 +16,14 @@ class Bank
                 'code' => 'VCB',
                 'label' => 'Ngân hàng Ngoại thương Việt Nam (Vietcombank)',
                 'image' => 'https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-Vietcombank.png',
-                'branch' => asset('img/logo/logo-ngan-hang-Vietcombank.png')
+                'banner' => asset('img/logo/logo-ngan-hang-Vietcombank.png')
             ],
             1 => [
                 'name' => 'VietinBank',
                 'code' => 'CTG',
                 'label' => 'Ngân hàng Công thương Việt Nam (VietinBank)',
                 'image' => 'https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-VietinBank-CTG-Ori.png',
-                'branch' => asset('img/logo/logo-ngan-hang-Vietinbank.png')
+                'banner' => asset('img/logo/logo-ngan-hang-Vietinbank.png')
             ],
             2 => [
                 'name' => 'ACB',
