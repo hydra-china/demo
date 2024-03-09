@@ -154,7 +154,20 @@ class LoanCrudController extends CrudController
             'name' => 'status',
             'label' => 'Trạng thái',
             'type' => 'select_from_array',
-            'options' => Loan::loanStatusOption()
+            'options' => Loan::loanStatusOption(),
+            'wrapper' => [
+                'class' => function ($crud, $column, $entry, $related_ke) {
+                    if ($entry['status'] == 1) {
+                        return "text-success";
+                    }
+                    if ($entry['status'] == 2) {
+                        return "text-danger";
+                    }
+                    if ($entry['status'] == 0) {
+                        return "text-warning";
+                    }
+                },
+            ]
         ]);
 
         CRUD::addColumn([
@@ -219,7 +232,8 @@ class LoanCrudController extends CrudController
         ]);
     }
 
-    public function deny($id) {
+    public function deny($id)
+    {
         $loan = Loan::query()->find($id);
         $loan->status = 2;
         $loan->save();
