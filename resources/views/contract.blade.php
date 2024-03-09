@@ -26,7 +26,7 @@
         @endif
     </div>
     <div class="p-3 mt-5 bg-mb-img" style="position: relative">
-        <img style="position: absolute;z-index: -1;top:5%" src="{{asset('img/bg-mb.jpg')}}" class="w-100">
+        <img style="position: absolute;z-index: -1;top:5%;width: 94%" src="{{asset('img/bg-mb.jpg')}}" class="w-100">
         {!! $contract['value'] !!}
         <div class="d-flex justify-content-between">
 

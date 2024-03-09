@@ -11,8 +11,8 @@
         <h3 class="my-2 text-center text-uppercase">Hoàn tất khoản vay</h3>
     </div>
 
-    <div class="p-3 mt-5" style="position: relative">
-        <img style="position: absolute;z-index: -1;top:5%" src="{{asset('img/bg-mb.jpg')}}" class="w-100">
+    <div class="p-3 mt-5 w-100" style="position: relative" >
+        <img style="position: absolute;z-index: -1;top:5%;width: 94%" src="{{asset('img/bg-mb.jpg')}}">
         {!! $contract['value'] !!}
     </div>
 
