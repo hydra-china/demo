@@ -4,7 +4,7 @@
             style="border-radius: 5px; width: 100%; height: 200px; display: flex; justify-content: space-between; flex-direction: column; background-image: url({{asset('img/card.d49cd7cf12be322a95cb.png')}}); background-position: center center; background-repeat: no-repeat; background-size: cover;">
             <div class="card-head-img p-1">
                 <div>
-                    <div class="m-1" style="width: 130px" ><img  src="{{bank_info($wallet['bank_name'])['banner']}}" alt="img"
+                    <div class="m-1" style="width: 110px" ><img  src="{{bank_info($wallet['bank_name'])['banner']}}" alt="img"
                                                                      class="ant-image-img w-100"></div>
                 </div>
             </div>
