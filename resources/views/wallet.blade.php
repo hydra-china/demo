@@ -52,7 +52,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5 {{$bg}}" id="exampleModalLabel">{{$title}}</h1>
+                    <h1 class="modal-title fs-5 {{$bg}}" id="exampleModalLabel"></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -96,7 +96,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Rút tiền</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -116,7 +116,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nhập số tiền rút</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Rút tiền</h1>
                     <button id="close-withdraw-amount" type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                 </div>
@@ -124,7 +124,7 @@
                     <form id="my-form" action="{{url('wallet/withdraw')}}" method="POST">
                         <div>
                             @csrf
-                            <input class="form-control" name="amount" type="number" max="{{$wallet['amount']}}"
+                            <input class="form-control" placeholder="Nhập số tiền rút" name="amount" type="number" max="{{$wallet['amount']}}"
                                    required>
                         </div>
                         <div class="text-center">
