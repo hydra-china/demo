@@ -124,7 +124,8 @@
                     <form id="my-form" action="{{url('wallet/withdraw')}}" method="POST">
                         <div>
                             @csrf
-                            <input class="form-control" placeholder="Nhập số tiền rút" name="amount" type="number" max="{{$wallet['amount']}}"
+                            <input class="form-control" placeholder="Nhập số tiền rút" name="amount" type="number"
+                                   max="{{$wallet['amount']}}"
                                    required>
                         </div>
                         <div class="text-center">
@@ -144,6 +145,12 @@
         $(document).ready(function () {
             $("#my-form").submit(function (e) {
                 e.preventDefault()
+
+                @if($wallet['amount'] == 0)
+                    alert('Số dư không khả dụng')
+                    return;
+                @endif
+
                 $("#close-withdraw-amount").click()
                 const formData = new FormData(this)
                 $.ajax({
