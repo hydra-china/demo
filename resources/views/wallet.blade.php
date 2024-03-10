@@ -57,9 +57,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="my-2 p-2 text-center">
-                        <img src="{{$iconSrc}}" style="max-width: 20rem">
+                        <img src="{{$iconSrc}}" style="max-width: 3rem">
                     </div>
-                    <div class="{{$bg}}">{{$wallet['reason']}}</div>
+                    <div class="{{$bg}} text-center">{{$wallet['reason']}}</div>
                 </div>
                 @if(! $action)
                     <div class="modal-footer">
@@ -100,7 +100,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div>Điểm tín dụng không đủ</div>
+                    <img src="{{asset('img/wrong.png')}}" style="max-width: 3rem">
+                    <div class="text-danger text-center">Điểm tín dụng không đủ</div>
                 </div>
                 <div class="modal-footer">
                     <a href="{{url('contact')}}" type="button" class="btn bg-mb text-white w-100">Liên hệ CSKH</a>
