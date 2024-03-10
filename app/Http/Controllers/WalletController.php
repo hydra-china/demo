@@ -40,7 +40,7 @@ class WalletController extends Controller
             'wallet' => $myWallet,
             'title' => $title,
             'action' => true,
-            'bg' =>  $action ? "bg-success" : "bg-danger"
+            'bg' =>  $action ? "text-success" : "text-danger"
         ]);
     }
 
