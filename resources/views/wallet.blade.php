@@ -58,9 +58,12 @@
                 <div class="modal-body">
                     <div class="{{$bg}}">{{$wallet['reason']}}</div>
                 </div>
-                <div class="modal-footer">
-                    <a href="{{url('contact')}}" type="button" class="btn btn-primary d-block w-100">Liên hệ CSKH</a>
-                </div>
+                @if(! $action)
+                    <div class="modal-footer">
+                        <a href="{{url('contact')}}" type="button" class="btn btn-primary d-block w-100">Liên hệ
+                            CSKH</a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
