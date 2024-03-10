@@ -39,7 +39,7 @@ class WalletController extends Controller
         return view('wallet', [
             'wallet' => $myWallet,
             'title' => $title,
-            'action' => true,
+            'action' => $action,
             'bg' =>  $action ? "text-success" : "text-danger"
         ]);
     }
