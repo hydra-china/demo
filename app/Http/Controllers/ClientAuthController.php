@@ -57,8 +57,6 @@ class ClientAuthController extends Controller
             'password' => 'required|confirmed',
         ]);
 
-
-
         $user = User::query()->create([
             'username' => request('username'),
             'name' => request('username'),
