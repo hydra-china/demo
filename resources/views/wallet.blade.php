@@ -29,7 +29,7 @@
     </div>
     <div class="p-2 px-3">
         <button href="#" type="button" id="withdraw-btn" data-bs-toggle="modal" data-bs-target="#withdraw"
-           class="d-block btn bg-mb text-white p-3 font-semi-bold">
+           class="d-block btn bg-mb text-white p-3 font-semi-bold w-100">
             <div class="d-flex justify-content-between">
                 <span class="text-uppercase"> Rút tiền về tài khoản liên kết</span>
                 <span>
