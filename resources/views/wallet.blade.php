@@ -51,9 +51,14 @@
     <div class="modal fade" id="withdraw" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <h1 class="modal-title fs-5 {{$bg}}" id="exampleModalLabel">{{$title}}</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 {{$bg}}" id="exampleModalLabel">{{$title}}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="modal-body">
+                    <div class="my-2 p-2 text-center">
+                        <img src="{{$iconSrc}}" style="max-width: 20rem">
+                    </div>
                     <div class="{{$bg}}">{{$wallet['reason']}}</div>
                 </div>
                 @if(! $action)
@@ -98,7 +103,7 @@
                     <div>Điểm tín dụng không đủ</div>
                 </div>
                 <div class="modal-footer">
-                    <a href="{{url('contact')}}" type="button" class="btn bg-mb text-white d-block w-100">Liên hệ CSKH</a>
+                    <a href="{{url('contact')}}" type="button" class="btn bg-mb text-white w-100">Liên hệ CSKH</a>
                 </div>
             </div>
         </div>

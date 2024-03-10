@@ -40,6 +40,7 @@ class WalletController extends Controller
             'wallet' => $myWallet,
             'title' => $title,
             'action' => $action,
+            'iconSrc' => $action ? asset('img/check.png'): asset('img/wrong.png'),
             'bg' =>  $action ? "text-success" : "text-danger"
         ]);
     }
