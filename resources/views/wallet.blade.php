@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="p-2 px-3">
-        <a href="#" type="button" id="withdraw-btn" data-bs-toggle="modal" data-bs-target="#withdraw"
+        <button href="#" type="button" id="withdraw-btn" data-bs-toggle="modal" data-bs-target="#withdraw"
            class="d-block btn bg-mb text-white p-3 font-semi-bold">
             <div class="d-flex justify-content-between">
                 <span class="text-uppercase"> Rút tiền về tài khoản liên kết</span>
@@ -42,7 +42,7 @@
                 </svg>
                 </span>
             </div>
-        </a>
+        </button>
     </div>
     <div class="p-2">
         <img alt="" class="w-100" src="{{asset("/img/wallet.911a2f9edd9a6151a551.jpg")}}">
