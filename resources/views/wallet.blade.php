@@ -60,7 +60,7 @@
                 </div>
                 @if(! $action)
                     <div class="modal-footer">
-                        <a href="{{url('contact')}}" type="button" class="btn btn-primary d-block w-100">Liên hệ
+                        <a href="{{url('contact')}}" type="button" class="btn bg-mb text-white d-block w-100">Liên hệ
                             CSKH</a>
                     </div>
                 @else
