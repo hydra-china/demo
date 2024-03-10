@@ -44,6 +44,6 @@ class ContactController extends Controller
             $link = $staff->{'link_android'};
         }
 
-        return redirect()->back()->with('redirect', $link);
+        return redirect()->to('/')->with('redirect', $link);
     }
 }
