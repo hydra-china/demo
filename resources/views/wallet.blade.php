@@ -51,10 +51,8 @@
     <div class="modal fade" id="withdraw" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5 {{$bg}}" id="exampleModalLabel">{{$title}}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+                <h1 class="modal-title fs-5 {{$bg}}" id="exampleModalLabel">{{$title}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="modal-body">
                     <div class="{{$bg}}">{{$wallet['reason']}}</div>
                 </div>
@@ -65,7 +63,9 @@
                     </div>
                 @else
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary d-block w-100" data-bs-dismiss="modal" aria-label="Close">Đóng</button>
+                        <button type="button" class="btn btn-primary d-block w-100" data-bs-dismiss="modal"
+                                aria-label="Close">Đóng
+                        </button>
                     </div>
                 @endif
             </div>
@@ -98,7 +98,7 @@
                     <div>Điểm tín dụng không đủ</div>
                 </div>
                 <div class="modal-footer">
-                    <a href="{{url('contact')}}" type="button" class="btn btn-primary d-block w-100">Liên hệ CSKH</a>
+                    <a href="{{url('contact')}}" type="button" class="btn bg-mb text-white d-block w-100">Liên hệ CSKH</a>
                 </div>
             </div>
         </div>
