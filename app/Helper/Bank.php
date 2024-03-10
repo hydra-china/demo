@@ -408,7 +408,7 @@ class Bank
                 'code' => 'Dong A Bank',
                 'label' => 'Ngân hàng Đông Á',
                 'image' => asset('img/logo/DongA-bank-logo.png'),
-                'banner' => asset('img/banner/DongA-bank-logo.png')
+                'banner' => asset('img/logo/DongA-bank-logo.png')
             ],
         ];
     }
