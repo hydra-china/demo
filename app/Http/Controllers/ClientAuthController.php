@@ -53,9 +53,11 @@ class ClientAuthController extends Controller
     public function register(): RedirectResponse
     {
         $this->validate(request(), [
-            'username' => 'required',
+            'username' => 'required|unique:users,username',
             'password' => 'required|confirmed',
         ]);
+
+
 
         $user = User::query()->create([
             'username' => request('username'),
