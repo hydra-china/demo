@@ -39,8 +39,8 @@ if (!function_exists('bankOptionsWithIcon')) {
     {
         foreach (Bank::all() as $maNganHang => $thongTinNganHang) {
             $formattedArray[$maNganHang] = [
-                'label' => $thongTinNganHang['label'],
-                'image' => $thongTinNganHang['image']
+                'label' => $thongTinNganHang['label'] == '' ? asset('img/logo/empty-bank.png') : $thongTinNganHang['label'],
+                'image' => $thongTinNganHang['image'] == '' ? asset('img/logo/empty-bank.png') : $thongTinNganHang['image']
             ];
         }
 
@@ -51,7 +51,14 @@ if (!function_exists('bankOptionsWithIcon')) {
 if (!function_exists('bank_info')) {
     function bank_info($bankId): array
     {
-        return Bank::all()[$bankId] ?? [];
+        $data = Bank::all()[$bankId] ?? [];
+
+        if ($data['image'] == '') {
+            $data['image'] = 'https://cdn-icons-png.flaticon.com/512/4770/4770298.png';
+            $data['banner'] = 'https://cdn-icons-png.flaticon.com/512/4770/4770298.png';
+        }
+
+        return $data;
     }
 }
 

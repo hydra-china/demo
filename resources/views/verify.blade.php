@@ -123,8 +123,8 @@
 
 
         img {
-            width: 20px;
-            height: 20px;
+            width: 40px;
+            height: auto;
             margin-right: 5px;
         }
     </style>

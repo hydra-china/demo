@@ -8,127 +8,407 @@ namespace App\Helper;
 
 class Bank
 {
-    public static function all(): array
+    public static function all()
     {
         return [
             0 => [
-                'name' => 'Vietcombank',
-                'code' => 'VCB',
-                'label' => 'Ngân hàng Ngoại thương Việt Nam (Vietcombank)',
-                'image' => 'https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-Vietcombank.png',
-                'banner' => asset('img/logo/logo-ngan-hang-Vietcombank.png')
+                'name' => 'BIDV',
+                'code' => 'BIDV',
+                'label' => 'Ngân hàng Đầu tư và Phát triển Việt Nam',
+                'image' => asset('img/logo/logo-ngan-hang-BIDV.png'),
+                'banner' => asset('img/logo/logo-ngan-hang-BIDV.png'),
             ],
             1 => [
-                'name' => 'VietinBank',
-                'code' => 'CTG',
-                'label' => 'Ngân hàng Công thương Việt Nam (VietinBank)',
-                'image' => 'https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-VietinBank-CTG-Ori.png',
-                'banner' => asset('img/logo/logo-ngan-hang-Vietinbank.png')
-            ],
-            2 => [
                 'name' => 'ACB',
                 'code' => 'ACB',
-                'label' => 'Ngân hàng Á Châu (ACB)',
-                'image' => 'https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-ACB-Ori.png',
+                'label' => 'Ngân hàng Á Châu',
+                'image' => asset('img/logo/logo-ngan-hang-ACB.png'),
                 'banner' => asset('img/logo/logo-ngan-hang-ACB.png')
             ],
-            3 => [
-                'name' => 'MBBank',
-                'code' => 'MBB',
-                'label' => 'Ngân hàng Quân đội (MBBank)',
-                'image' => 'https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-MB-Bank-MBB.png',
+            2 => [
+                'name' => 'MB',
+                'code' => 'MB',
+                'label' => 'Ngân hàng Quân Đội',
+                'image' => asset('img/logo/logo-ngan-hang-MB-new2020.gif'),
                 'banner' => asset('img/logo/logo-ngan-hang-MB-new2020.gif')
+            ],
+            3 => [
+                'name' => 'VPBank',
+                'code' => 'VPBank',
+                'label' => 'Ngân hàng Thương mại cổ phần Việt Nam Thịnh Vượng',
+                'image' => asset('img/logo/logo-ngan-hang-VPBank.png'),
+                'banner' => asset('img/logo/logo-ngan-hang-VPBank.png'),
             ],
             4 => [
                 'name' => 'TPBank',
-                'code' => 'TPB',
-                'label' => 'Ngân hàng Tiền Phong (TPBank)',
-                'image' => 'https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-TPBank.png',
+                'code' => 'TPBank',
+                'label' => 'Ngân hàng Tiên Phong TPBank',
+                'image' => asset('img/logo/TPbank-logo.png'),
                 'banner' => asset('img/logo/TPbank-logo.png')
             ],
             5 => [
-                'name' => 'BIDV',
-                'code' => 'BID',
-                'label' => 'Ngân hàng Đầu tư và Phát triển Việt Nam (BIDV)',
-                'image' => 'https://cdn.haitrieu.com/wp-content/uploads/2022/01/Icon-BIDV-.png',
-                'banner' => asset('img/logo/logo-ngan-hang-BIDV.png')
+                'name' => 'Vietinbank',
+                'code' => 'Vietinbank',
+                'label' => 'Ngân hàng công thương Việt Nam',
+                'image' => asset('img/logo/logo-ngan-hang-Vietinbank.png'),
+                'banner' => asset('img/logo/logo-ngan-hang-Vietinbank.png')
             ],
             6 => [
-                'name' => 'Sacombank',
-                'code' => 'STB',
-                'label' => 'Ngân hàng Sài Gòn Thương Tín (Sacombank)',
-                'image' => 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Logo-Sacombank-new.png',
-                'banner' => asset('img/logo/logo-ngan-hang-Sacombank.png')
+                'name' => 'Agribank',
+                'code' => 'Agribank',
+                'label' => 'Ngân hàng NN & PTNT VN',
+                'image' => asset('img/logo/Agribank-logo.png'),
+                'banner' => asset('img/logo/Agribank-logo.png'),
             ],
             7 => [
                 'name' => 'Techcombank',
-                'code' => 'TCB',
-                'label' => 'Ngân hàng Techcombank',
-                'image' => 'https://img7.thuthuatphanmem.vn/uploads/2023/07/06/mau-logo-techcombank-dep_045648494.png',
-                'banner' => asset('img/logo/logo-ngan-hang-Techcombank.png')
+                'code' => 'Techcombank',
+                'label' => 'Ngân hàng Kỹ thương Việt Nam',
+                'image' => asset('img/logo/logo-ngan-hang-Techcombank.png'),
+                'banner' => asset('img/logo/logo-ngan-hang-Techcombank.png'),
             ],
             8 => [
-                'name' => 'DongA',
-                'code' => 'DAB',
-                'label' => 'Ngân hàng Đông Á',
-                'image' => 'https://media.licdn.com/dms/image/C510BAQH3oVF-9d7uGg/company-logo_200_200/0/1631360798710?e=2147483647&v=beta&t=iY4gtgTY2ByZNhmzMyIvqk9ZE-m1qyNEt4Oh7Kk8fqw',
-                'banner' => asset('img/logo/DongA-bank-logo.png')
+                'name' => 'Vietcombank',
+                'code' => 'Vietcombank',
+                'label' => 'Ngân hàng TMCP Ngoại Thương',
+                'image' => asset('img/logo/logo-ngan-hang-Vietcombank.png'),
+                'banner' => asset('img/logo/logo-ngan-hang-Vietcombank.png'),
             ],
             9 => [
-                'name' => 'Eximbank',
-                'code' => 'EIB',
-                'label' => 'Ngân hàng Xuất nhập khẩu (Eximbank)',
-                'image' => 'https://play-lh.googleusercontent.com/ku03AFfcKRFoAZCg-coMNJdVFQ0pcDWwRxy416NMd4OJ7TlD21Ia3MyqrdN8LgJTOw',
-                'banner' => asset('img/logo/Eximbank.jpg')
+                'name' => 'ABBank',
+                'code' => 'ABBank',
+                'label' => 'Ngân hàng An Bình',
+                'image' => '',
+                'banner' => ''
             ],
             10 => [
-                'name' => 'MSBBank',
-                'code' => 'MSB',
-                'label' => 'Ngân hàng Hàng Hải (MaritimeBank)',
-                'image' => 'https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-MSB.png',
-                'banner' => asset('img/logo/MSB-bank-logo.png')
+                'name' => 'Baoviet Bank',
+                'code' => 'Baoviet Bank',
+                'label' => 'Ngân hàng TMCP Bảo Việt',
+                'image' => asset('img/logo/BAOVIET-bank-logo.png'),
+                'banner' => asset('img/logo/BAOVIET-bank-logo.png'),
             ],
             11 => [
-                'name' => 'NamABank',
-                'code' => 'NAM',
-                'label' => 'Ngân hàng Nam Á (NamABank)',
-                'image' => 'https://play-lh.googleusercontent.com/w0Gx3O5kKOS1rbBANy741z15yQR4diJMXw6UHnVGNp3PCBTpEiNvCpt0dPCAHMtQBvw',
-                'banner' => asset('img/logo/NAMA-Bank-logo.png')
+                'name' => 'CIMB',
+                'code' => 'CIMB',
+                'label' => 'Ngân hàng TNHH MTV CIMB Việt Nam',
+                'image' => '',
+                'banner' => ''
             ],
             12 => [
-                'name' => 'Agribank',
-                'code' => 'AGR',
-                'label' => 'Ngân hàng Nông nghiệp và Phát triển Nông thôn (Agribank)',
-                'image' => 'https://cdn.haitrieu.com/wp-content/uploads/2022/01/Icon-Agribank.png',
-                'banner' => asset('img/logo/Agribank-logo.png')
+                'name' => 'Eximbank',
+                'code' => 'Eximbank',
+                'label' => 'Ngân hàng Xuất nhập khẩu Việt Nam',
+                'image' => asset('img/logo/Eximbank.jpg'),
+                'banner' => asset('img/logo/Eximbank.jpg'),
             ],
             13 => [
-                'name' => 'VIB',
-                'code' => 'VIB',
-                'label' => 'Ngân hàng Quốc tế (VIB)',
-                'image' => 'https://www.saokim.com.vn/wp-content/uploads/2023/01/Bieu-Tuong-Logo-Ngan-Hang-VIB.png',
-                'banner' => asset('/img/logo/VIB-bank-logo.png')
+                'name' => 'GP Bank',
+                'code' => 'GP Bank',
+                'label' => 'Ngân hàng Dầu khí Toàn cầu',
+                'image' => asset('img/logo/GPBANK-logo.png'),
+                'banner' => asset('img/logo/GPBANK-logo.png'),
             ],
             14 => [
-                'name' => 'SHB',
-                'code' => 'SHB',
-                'label' => 'Ngân hàng Sài Gòn Hà Nội (SHB)',
-                'image' => 'https://cdn.haitrieu.com/wp-content/uploads/2022/02/Icon-SHB.png',
-                'banner' => asset('img/logo/logo-ngan-hang-SHB.png')
+                'name' => 'HDBank',
+                'code' => 'HDBank',
+                'label' => 'Ngân hàng Phát triển TP HCM',
+                'image' => asset('img/logo/HDBank.png'),
+                'banner' => asset('img/logo/HDBank.png'),
             ],
             15 => [
-                'name' => 'VPBank',
-                'code' => 'VPB',
-                'label' => 'Ngân hàng Việt Nam Thịnh Vượng (VPBank)',
-                'image' => 'https://cdn.haitrieu.com/wp-content/uploads/2022/01/Icon-VPBank.png',
-                'banner' => asset('img/logo/logo-ngan-hang-VPbank.png')
+                'name' => 'HLO',
+                'code' => 'HLO',
+                'label' => 'Ngân hàng Hong Leong Viet Nam',
+                'image' => '',
+                'banner' => ''
             ],
             16 => [
+                'name' => 'Kienlongbank',
+                'code' => 'Kienlongbank',
+                'label' => 'Ngân hàng Kiên Long',
+                'image' => asset('img/logo/KienLongBank-logo.png'),
+                'banner' => asset('img/logo/KienLongBank-logo.png'),
+            ],
+            17 => [
+                'name' => 'Lienvietbank',
+                'code' => 'Lienvietbank',
+                'label' => 'Ngan hàng TMCP Bưu điện Liên Việt',
+                'image' => asset('img/logo/LienVietPostBank-logo.png'),
+                'banner' => asset('img/logo/LienVietPostBank-logo.png'),
+            ],
+            18 => [
+                'name' => 'MSB',
+                'code' => 'MSB',
+                'label' => 'Ngân hàng Hàng Hải Việt Nam',
+                'image' => asset('img/logo/MSB-bank-logo.png'),
+                'banner' => asset('img/logo/MSB-bank-logo.png'),
+            ],
+            19 => [
+                'name' => 'Nam A Bank',
+                'code' => 'Nam A Bank',
+                'label' => 'Ngân hàng Nam Á',
+                'image' => asset('img/logo/NAMA-Bank-logo.png'),
+                'banner' => asset('img/logo/NAMA-Bank-logo.png'),
+            ],
+            20 => [
+                'name' => 'NASBank',
+                'code' => 'NASBank',
+                'label' => 'Ngân hàng Bắc Á',
+                'image' => asset('img/logo/BACA-bank-logo.png'),
+                'banner' => asset('img/logo/BACA-bank-logo.png'),
+            ],
+            21 => [
+                'name' => 'NCB',
+                'code' => 'NCB',
+                'label' => 'Ngân hàng Quoc Dan',
+                'image' => asset('img/logo/NCB-Bank-logo.png'),
+                'banner' => asset('img/logo/NCB-Bank-logo.png'),
+            ],
+            22 => [
+                'name' => 'OCBC',
+                'code' => 'OCBC',
+                'label' => 'Oversea - Chinese Bank',
+                'image' => '',
+                'banner' => ''
+            ],
+            23 => [
+                'name' => 'Ocean Bank',
+                'code' => 'Ocean Bank',
+                'label' => 'Ngân hàng Đại Dương',
+                'image' => asset('img/logo/Oceanbank-logo.png'),
+                'banner' => asset('img/logo/Oceanbank-logo.png'),
+            ],
+            24 => [
+                'name' => 'OCB',
+                'code' => 'OCB',
+                'label' => 'Ngân hàng Phương Đông',
+                'image' => asset('img/logo/OCB-bank-logo.png'),
+                'banner' => asset('img/logo/OCB-bank-logo.png'),
+            ],
+            25 => [
+                'name' => 'PG Bank',
+                'code' => 'PG Bank',
+                'label' => 'Ngân hàng Xăng dầu Petrolimex',
+                'image' => asset('img/logo/PG-bank-logo.png'),
+                'banner' => asset('img/logo/PG-bank-logo.png'),
+            ],
+            26 => [
+                'name' => 'PVcombank',
+                'code' => 'PVcombank',
+                'label' => 'NH TMCP Đại Chúng Viet Nam',
+                'image' => asset('img/logo/PVcom-bank-logo.png'),
+                'banner' => asset('img/logo/PVcom-bank-logo.png'),
+            ],
+            27 => [
+                'name' => 'QTDCS',
+                'code' => 'QTDCS',
+                'label' => 'Quỹ tín dụng cơ sở',
+                'image' => '',
+                'banner' => ''
+            ],
+            28 => [
+                'name' => 'Sacombank',
+                'code' => 'Sacombank',
+                'label' => 'Ngân hàng Sài Gòn Thương Tín',
+                'image' => asset('img/logo/logo-ngan-hang-Sacombank.png'),
+                'banner' => asset('img/logo/logo-ngan-hang-Sacombank.png'),
+            ],
+            29 => [
+                'name' => 'Saigonbank',
+                'code' => 'Saigonbank',
+                'label' => 'Ngân hàng Sài Gòn Công Thương',
+                'image' => asset('img/logo/Saigonbank-logo.png'),
+                'banner' => asset('img/logo/Saigonbank-logo.png'),
+            ],
+            30 => [
+                'name' => 'SCB',
+                'code' => 'SCB',
+                'label' => 'Ngân hàng TMCP Sài Gòn',
+                'image' => asset('img/logo/logo-ngan-hang-SCB.png'),
+                'banner' => asset('img/logo/logo-ngan-hang-SCB.png'),
+            ],
+            31 => [
+                'name' => 'SCBank',
+                'code' => 'SCBank',
+                'label' => 'Ngân hàng Standard Chartered Bank Việt Nam',
+                'image' => '',
+                'banner' => ''
+            ],
+            32 => [
+                'name' => 'SCBank HN',
+                'code' => 'SCBank HN',
+                'label' => 'Ngân hàng Standard Chartered Bank HN',
+                'image' => '',
+                'banner' => ''
+            ],
+            33 => [
+                'name' => 'SCSB',
+                'code' => 'SCSB',
+                'label' => 'The Shanghai Commercial & Savings Bank CN Đồng Nai',
+                'image' => '',
+                'banner' => ''
+            ],
+            34 => [
                 'name' => 'SeABank',
-                'code' => 'SEA',
-                'label' => 'Ngân hàng Đông Nam Á (SeABank)',
-                'image' => 'https://brademar.com/wp-content/uploads/2022/09/SeABank-Logo-PNG-3.png',
-                'banner' => asset('img/logo/SeABank-logo.png')
+                'code' => 'SeABank',
+                'label' => 'Ngân hàng TMCP Đông Nam Á',
+                'image' => asset('img/logo/SeABank-logo.png'),
+                'banner' => asset('img/logo/SeABank-logo.png'),
+            ],
+            35 => [
+                'name' => 'SHB',
+                'code' => 'SHB',
+                'label' => 'Ngân hàng Sài Gòn - Hà Nội',
+                'image' => asset('img/logo/logo-ngan-hang-SHB.png'),
+                'banner' => asset('img/logo/logo-ngan-hang-SHB.png'),
+            ],
+            36 => [
+                'name' => 'Shinhan Bank',
+                'code' => 'Shinhan Bank',
+                'label' => 'Ngân hàng TNHH MTV Shinhan Việt Nam',
+                'image' => asset('img/logo/Shinhan-bank-logo.png'),
+                'banner' => asset('img/logo/Shinhan-bank-logo.png'),
+            ],
+            37 => [
+                'name' => 'SIAM',
+                'code' => 'SIAM',
+                'label' => 'Ngân hàng The Siam Commercial Public',
+                'image' => '',
+                'banner' => ''
+            ],
+            38 => [
+                'name' => 'SMBC',
+                'code' => 'SMBC',
+                'label' => 'Sumitomo Mitsui Banking Corporation HCM',
+                'image' => '',
+                'banner' => ''
+            ],
+            39 => [
+                'name' => 'SMBC HN',
+                'code' => 'SMBC HN',
+                'label' => 'Sumitomo Mitsui Banking Corporation HN',
+                'image' => '',
+                'banner' => ''
+            ],
+            40 => [
+                'name' => 'SPB',
+                'code' => 'SPB',
+                'label' => 'Ngân hàng SinoPac',
+                'image' => '',
+                'banner' => ''
+            ],
+            41 => [
+                'name' => 'TFCBHN',
+                'code' => 'TFCBHN',
+                'label' => 'Taipei Fubon Commercial Bank Ha Noi',
+                'image' => '',
+                'banner' => ''
+            ],
+            42 => [
+                'name' => 'TFCBTPHCM',
+                'code' => 'TFCBTPHCM',
+                'label' => 'Taipei Fubon Commercial Bank TP Ho Chi Minh',
+                'image' => '',
+                'banner' => ''
+            ],
+            43 => [
+                'name' => 'VBSP',
+                'code' => 'VBSP',
+                'label' => 'Ngân hàng Chính sách xã hội Việt Nam',
+                'image' => '',
+                'banner' => ''
+            ],
+            44 => [
+                'name' => 'VDB',
+                'code' => 'VDB',
+                'label' => 'Ngân hàng Phát triển Việt Nam',
+                'image' => '',
+                'banner' => ''
+            ],
+            45 => [
+                'name' => 'VIB',
+                'code' => 'VIB',
+                'label' => 'Ngân hàng Quốc tế',
+                'image' => asset('img/logo/VIB-bank-logo.png'),
+                'banner' => asset('img/logo/VIB-bank-logo.png'),
+            ],
+            46 => [
+                'name' => 'VID public',
+                'code' => 'VID public',
+                'label' => 'Ngân hàng VID Public',
+                'image' => '',
+                'banner' => ''
+            ],
+            47 => [
+                'name' => 'Viet Hoa Bank',
+                'code' => 'Viet Hoa Bank',
+                'label' => 'Ngân hàng Việt Hoa',
+                'image' => '',
+                'banner' => ''
+            ],
+            48 => [
+                'name' => 'VietA Bank',
+                'code' => 'VietA Bank',
+                'label' => 'Ngân hàng Việt Á',
+                'image' => '',
+                'banner' => ''
+            ],
+            49 => [
+                'name' => 'Vietbank',
+                'code' => 'Vietbank',
+                'label' => 'Ngân hàng Việt Nam Thương Tín',
+                'image' => asset('img/logo/VIETBANK-logo.png'),
+                'banner' => asset('img/logo/VIETBANK-logo.png')
+            ],
+            50 => [
+                'name' => 'VietCapital Bank',
+                'code' => 'VietCapital Bank',
+                'label' => 'NHTMCP Bản Việt',
+                'image' => asset('img/logo/VietCapitalBank-logo.png'),
+                'banner' => asset('img/logo/VietCapitalBank-logo.png'),
+            ],
+            51 => [
+                'name' => 'VNCB',
+                'code' => 'VNCB',
+                'label' => 'NH TMCP Xây dựng Việt Nam',
+                'image' => '',
+                'banner' => ''
+            ],
+            52 => [
+                'name' => 'VRB',
+                'code' => 'VRB',
+                'label' => 'Ngân hàng Liên doanh Việt Nga',
+                'image' => '',
+                'banner' => ''
+            ],
+            53 => [
+                'name' => 'Vung Tau',
+                'code' => 'Vung Tau',
+                'label' => 'Ngân hàng Vũng Tàu',
+                'image' => '',
+                'banner' => ''
+            ],
+            54 => [
+                'name' => 'WHHCM',
+                'code' => 'WHHCM',
+                'label' => 'NH Woori HCM',
+                'image' => '',
+                'banner' => ''
+            ],
+            55 => [
+                'name' => 'WHHN',
+                'code' => 'WHHN',
+                'label' => 'WOORI BANK Hà Nội',
+                'image' => '',
+                'banner' => ''
+            ],
+            56 => [
+                'name' => 'Dong A Bank',
+                'code' => 'Dong A Bank',
+                'label' => 'Ngân hàng Đông Á',
+                'image' => asset('img/logo/DongA-bank-logo.png'),
+                'banner' => asset('img/banner/DongA-bank-logo.png')
             ],
         ];
     }
