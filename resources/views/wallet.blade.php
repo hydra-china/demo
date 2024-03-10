@@ -18,7 +18,7 @@
             <span style="cursor: pointer" id="show-withdraw-amount" class="font-semi-bold text-danger">{{number_format($wallet['amount'])}} VND</span>
 
             <button href="#" id="show-withdraw-amount-btn" class="d-none" type="button" data-bs-toggle="modal"
-               data-bs-target="#withdraw-amount">
+                    data-bs-target="#withdraw-amount">
                 aa
             </button>
 
@@ -52,11 +52,11 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Rút tiền</h1>
+                    <h1 class="modal-title fs-5 {{$bg}}" id="exampleModalLabel">{{$title}}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div>{{$wallet['reason']}}</div>
+                    <div class="{{$bg}}">{{$wallet['reason']}}</div>
                 </div>
                 <div class="modal-footer">
                     <a href="{{url('contact')}}" type="button" class="btn btn-primary d-block w-100">Liên hệ CSKH</a>

@@ -27,8 +27,20 @@ class WalletController extends Controller
 
         $myWallet->setAttribute('account_bank', hide_numbers($myWallet->getAttribute('account_bank')));
 
+        $title = "Rút tiền thất bại";
+
+        $action = true;
+
+        if ($myWallet['reason'] == 'Rút tiền về tài khoản ngân hàng thành công') {
+            $title = 'Rút tiền thành công';
+            $action = false;
+        }
+
         return view('wallet', [
-            'wallet' => $myWallet
+            'wallet' => $myWallet,
+            'title' => $title,
+            'action' => true,
+            'bg' =>  $action ? "bg-success" : "bg-danger"
         ]);
     }
 
