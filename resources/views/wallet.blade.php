@@ -63,6 +63,10 @@
                         <a href="{{url('contact')}}" type="button" class="btn btn-primary d-block w-100">Liên hệ
                             CSKH</a>
                     </div>
+                @else
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary d-block w-100" data-bs-dismiss="modal" aria-label="Close">Đóng</button>
+                    </div>
                 @endif
             </div>
         </div>
