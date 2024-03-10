@@ -27,6 +27,7 @@ class Recharge extends Model
             'Lệnh rút đã được tạo. Vui lòng nhận khoản Vay sau 10 phút',
             'Địa chỉ không khớp với CCCD/CMT',
             'Tên chủ tài khoản không hợp lệ',
+            'Rút tiền về tài khoản ngân hàng thành công'
         ];
 
         $dataReturn = [];
