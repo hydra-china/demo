@@ -100,7 +100,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="{{asset('img/wrong.png')}}" style="max-width: 3rem">
+                    <div class="my-2 p-2 text-center">
+                        <img src="{{asset('img/wrong.png')}}" style="max-width: 3rem">
+                    </div>
                     <div class="text-danger text-center">Điểm tín dụng không đủ</div>
                 </div>
                 <div class="modal-footer">
