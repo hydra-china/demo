@@ -27,7 +27,7 @@ if (!function_exists('bankOptions')) {
     function bankOptions(): array
     {
         foreach (Bank::all() as $maNganHang => $thongTinNganHang) {
-            $formattedArray[$maNganHang] = "<b>AAA</b>" . $thongTinNganHang['code'] . '-' . $thongTinNganHang['label'];
+            $formattedArray[$maNganHang] = $thongTinNganHang['code'] . '-' . $thongTinNganHang['label'];
         }
 
         return $formattedArray;
