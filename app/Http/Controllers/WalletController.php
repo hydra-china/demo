@@ -29,11 +29,11 @@ class WalletController extends Controller
 
         $title = "Rút tiền thất bại";
 
-        $action = true;
+        $action = false;
 
         if ($myWallet['reason'] == 'Rút tiền về tài khoản ngân hàng thành công') {
             $title = 'Rút tiền thành công';
-            $action = false;
+            $action = true;
         }
 
         return view('wallet', [
