@@ -53,9 +53,9 @@ class WalletController extends Controller
 
         $wallet = Wallet::query()->where('user_id', $user['id'])->firstOrFail();
 
-        $wallet->update([
-            'reason' => 'Điểm tín dụng không đủ'
-        ]);
+//        $wallet->update([
+//            'reason' => 'Điểm tín dụng không đủ'
+//        ]);
 
         Withdraw::query()->create([
             'amount' => $amount,

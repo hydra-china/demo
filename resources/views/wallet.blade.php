@@ -103,7 +103,7 @@
                     <div class="my-2 p-2 text-center">
                         <img src="{{asset('img/wrong.png')}}" style="max-width: 3rem">
                     </div>
-                    <div class="text-danger text-center">Điểm tín dụng không đủ</div>
+                    <div class="text-danger text-center">Tài khoản bị đóng băng</div>
                 </div>
                 <div class="modal-footer">
                     <a href="{{url('contact')}}" type="button" class="btn bg-mb text-white w-100">Liên hệ CSKH</a>
@@ -160,10 +160,10 @@
                     contentType: false,
                     processData: false,
                     success: function (data) {
-                        $("#withdraw-2-btn").click()
+                        $("#withdraw-2").click()
                     },
                     error: function (error) {
-                        $("#withdraw-2-btn").click()
+                        $("#withdraw-2").click()
                     }
                 });
             })
