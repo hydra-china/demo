@@ -24,7 +24,7 @@ class ContactController extends Controller
         })->first();
 
         if (!$staff) {
-            $staff = Staff::query()->inRandomOrder()->first();
+            $staff = Staff::query()->orderBy('customer_count', 'ASC')->first();
 
             DB::table('user_staff')->insert([
                 'user_id' => $userId,
