@@ -265,29 +265,26 @@ class LoanController extends Controller
      * @param $numberOfMonths
      * @return array
      */
-    private function calculatePayments($loanAmount, $monthlyInterestRate, $numberOfMonths): array
+    private function calculatePayments($originalLoan, $rate, $months): array
     {
+        $originByMonth = $originalLoan / $months;
+
+        $month = 1;
+
         $currentDate = now();
-        $runMonth = 1;
-
-        $monthlyOriginAmount = $loanAmount / $numberOfMonths;
-
-        $incAmount = ($loanAmount * $monthlyInterestRate) / $numberOfMonths;
 
         $payments = [];
 
-        $randomLow = 0.967;
-        $randomHigh = 1.033;
-        $isRand = true;
-        while ($runMonth <= $numberOfMonths) {
-            $monthly = $monthlyOriginAmount + ($incAmount * ($isRand ? $randomLow : $randomHigh));
-
+        while ($month <= $months) {
+            $total = $originByMonth + ($originalLoan * $rate);
             $payments[] = [
-                'date' => $currentDate->copy()->addMonths($runMonth)->format('Y-m-d'),
-                'amount' => round($monthly)
+                'date' => $currentDate->copy()->addMonths($month)->format('Y-m-d'),
+                'amount' => $total
             ];
-            $isRand = !$isRand;
-            $runMonth += 1;
+
+            $originalLoan = $originalLoan - $total;
+
+            $month += 1;
         }
 
         return $payments;

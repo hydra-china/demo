@@ -37,12 +37,12 @@
                 <select onchange="calculateFirstPayment()" id="months" class="form-select" name="months"
                         aria-label="Default select example">
                     <option disabled>Chọn thời hạn vay</option>
-                    <option value="6" {{$oldData['months'] == 6 ? 'active': null}}>6 tháng</option>
-                    <option value="12" {{$oldData['months'] == 12 ? 'active': null}}>12 tháng</option>
-                    <option value="24" {{$oldData['months'] == 24 ? 'active': null}}>24 tháng</option>
-                    <option value="36" {{$oldData['months'] == 36 ? 'active': null}}>36 tháng</option>
-                    <option value="48" {{$oldData['months'] == 48 ? 'active': null}}>48 tháng</option>
-                    <option value="60" {{$oldData['months'] == 60 ? 'active': null}}>60 tháng</option>
+                    <option value="6" {{$oldData['months'] == 6 ? 'selected': null}}>6 tháng</option>
+                    <option value="12" {{$oldData['months'] == 12 ? 'selected': null}}>12 tháng</option>
+                    <option value="24" {{$oldData['months'] == 24 ? 'selected': null}}>24 tháng</option>
+                    <option value="36" {{$oldData['months'] == 36 ? 'selected': null}}>36 tháng</option>
+                    <option value="48" {{$oldData['months'] == 48 ? 'selected': null}}>48 tháng</option>
+                    <option value="60" {{$oldData['months'] == 60 ? 'selected': null}}>60 tháng</option>
                 </select>
             </div>
         </div>
@@ -135,7 +135,7 @@
             const amount = document.getElementById('amount').value
             const months = document.getElementById('months').value
 
-            const firstPayment = (parseInt(amount) * 1.00967) / parseInt(months)
+            const firstPayment = (parseInt(amount)) / parseInt(months) + (parseInt(amount) * 0.01)
 
             document.getElementById('first-payment').innerText = firstPayment.toLocaleString() + " đ"
         }
