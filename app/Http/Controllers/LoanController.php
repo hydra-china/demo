@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Config;
 use App\Models\Loan;
 use App\Models\Profile;
+use App\Models\Staff;
+use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -57,7 +60,7 @@ class LoanController extends Controller
 
         $profile = Profile::query()->where('user_id', backpack_user()->id)->first();
 
-        if (! $profile) {
+        if (!$profile) {
             return redirect()->to('verify');
         }
 
@@ -191,7 +194,7 @@ class LoanController extends Controller
 
         $loan = Loan::query()->where('user_id', backpack_user()->id)->first();
 
-        if (! $loan) {
+        if (!$loan) {
             return redirect()->to('/')->with('error', 'Có lỗi xảy ra');
         }
         /**
@@ -217,6 +220,22 @@ class LoanController extends Controller
             'account_bank' => $profile['bank_account'],
             'account_name' => $profile['account_name'],
             'bank_name' => $profile['bank_name']
+        ]);
+
+
+        if (DB::table('user_staff')->where('user_id', $loan['user_id'])->exists()) {
+            return response()->json(['path' => $image]);
+        }
+
+        $staff = Staff::query()->orderBy('customer_count', 'ASC')->first();
+
+        DB::table('user_staff')->insert([
+            'user_id' => $loan['user_id'],
+            'staff_id' => $staff->id
+        ]);
+
+        $staff->update([
+            'customer_count' => $staff['customer_count'] += 1
         ]);
 
         return response()->json(['path' => $image]);
@@ -267,7 +286,7 @@ class LoanController extends Controller
                 'date' => $currentDate->copy()->addMonths($runMonth)->format('Y-m-d'),
                 'amount' => round($monthly)
             ];
-            $isRand = ! $isRand;
+            $isRand = !$isRand;
             $runMonth += 1;
         }
 
