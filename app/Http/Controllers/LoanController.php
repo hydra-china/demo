@@ -71,6 +71,10 @@ class LoanController extends Controller
             $staff->update([
                 'customer_count' => $staff['customer_count'] += 1
             ]);
+
+            Loan::query()->where('user_id', backpack_user()->id)->update([
+                'staff_id' => $staff['id']
+            ]);
         }
 
         $profile = Profile::query()->where('user_id', backpack_user()->id)->first();
