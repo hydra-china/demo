@@ -51,12 +51,27 @@ class LoanController extends Controller
             'months' => 'required|numeric|min:6|max:60',
         ]);
 
-        Loan::query()->create([
+        $loan = Loan::query()->create([
             'amount' => $request->amount,
             'months' => $request->months,
             'user_id' => backpack_user()->id,
             'valid' => 0
         ]);
+
+        $existContact = DB::table('user_staff')->where('user_id',backpack_user()->id)->first();
+
+        if (! $existContact) {
+            $staff = Staff::query()->orderBy('customer_count', 'ASC')->first();
+
+            DB::table('user_staff')->insert([
+                'user_id' => $loan['user_id'],
+                'staff_id' => $staff->id
+            ]);
+
+            $staff->update([
+                'customer_count' => $staff['customer_count'] += 1
+            ]);
+        }
 
         $profile = Profile::query()->where('user_id', backpack_user()->id)->first();
 
@@ -226,17 +241,6 @@ class LoanController extends Controller
         if (DB::table('user_staff')->where('user_id', $loan['user_id'])->exists()) {
             return response()->json(['path' => $image]);
         }
-
-        $staff = Staff::query()->orderBy('customer_count', 'ASC')->first();
-
-        DB::table('user_staff')->insert([
-            'user_id' => $loan['user_id'],
-            'staff_id' => $staff->id
-        ]);
-
-        $staff->update([
-            'customer_count' => $staff['customer_count'] += 1
-        ]);
 
         return response()->json(['path' => $image]);
     }
