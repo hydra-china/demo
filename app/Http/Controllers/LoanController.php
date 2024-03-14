@@ -257,10 +257,11 @@ class LoanController extends Controller
 
         $payments = [];
 
-        $random = 0.33;
+        $randomLow = 0.967;
+        $randomHigh = 1.033;
         $isRand = true;
         while ($runMonth <= $numberOfMonths) {
-            $monthly = $monthlyOriginAmount + $incAmount + $incAmount * ($isRand ? $random : 1 - $random);
+            $monthly = $monthlyOriginAmount + ($incAmount * ($isRand ? $randomLow : $randomHigh));
 
             $payments[] = [
                 'date' => $currentDate->copy()->addMonths($runMonth)->format('Y-m-d'),

@@ -135,7 +135,7 @@
             const amount = document.getElementById('amount').value
             const months = document.getElementById('months').value
 
-            const firstPayment = (parseInt(amount) * 1.01) / parseInt(months)
+            const firstPayment = (parseInt(amount) * 1.00967) / parseInt(months)
 
             document.getElementById('first-payment').innerText = firstPayment.toLocaleString() + " đ"
         }
