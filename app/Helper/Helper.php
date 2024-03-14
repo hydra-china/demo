@@ -15,7 +15,14 @@ if (!function_exists('backpack_pro')) {
 if (!function_exists('hide_numbers')) {
     function hide_numbers($number, $numToKeepStart = 3, $numToKeepEnd = 3, $maskCharacter = '*'): array|string
     {
+
+
         $totalLength = strlen($number);
+
+        if ($totalLength < 6) {
+            return $number;
+        }
+
         $visiblePart = $numToKeepStart + $numToKeepEnd;
 
         // Tạo chuỗi mới với các ký tự ẩn
