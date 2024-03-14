@@ -282,7 +282,7 @@ class LoanController extends Controller
                 'amount' => $total
             ];
 
-            $originalLoan = $originalLoan - $total;
+            $originalLoan = $originalLoan - $originByMonth;
 
             $month += 1;
         }
