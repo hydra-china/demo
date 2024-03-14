@@ -57,7 +57,7 @@ class LoanController extends Controller
 
         $profile = Profile::query()->where('user_id', backpack_user()->id)->first();
 
-        if (!$profile) {
+        if (! $profile) {
             return redirect()->to('verify');
         }
 
@@ -149,7 +149,7 @@ class LoanController extends Controller
         $loan = Loan::query()->where('user_id', backpack_user()->id)->where('valid', 0)->first();
 
         if ($loan) {
-            return  redirect()->to('/confirm');
+            return redirect()->to('/confirm');
         }
 
         return redirect()->to('/')->with('success', 'Thành công');
@@ -173,7 +173,7 @@ class LoanController extends Controller
         $this->mapVariable($value, '$code', $loan->getTimestampAttribute());
         $this->mapVariable($value, '$datetime', Carbon::parse($loan->created_at)->isoFormat('hh:mm:ss DD/MM/YYYY'));
 
-        $contract->setAttribute('value',  $value);
+        $contract->setAttribute('value', $value);
 
         return view('confirm', [
             'contract' => $contract
@@ -191,8 +191,7 @@ class LoanController extends Controller
 
         $loan = Loan::query()->where('user_id', backpack_user()->id)->first();
 
-
-        if (!$loan) {
+        if (! $loan) {
             return redirect()->to('/')->with('error', 'Có lỗi xảy ra');
         }
         /**
@@ -203,7 +202,7 @@ class LoanController extends Controller
 
         $signature = $request->get('signature');
 
-        $image = saveImgBase64($signature,'signatures');
+        $image = saveImgBase64($signature, 'signatures');
 
         $loan->update([
             'signature' => $image,
@@ -212,7 +211,7 @@ class LoanController extends Controller
 
         Wallet::query()->updateOrCreate([
             'user_id' => $loan['user_id']
-        ],[
+        ], [
             'user_id' => $loan['user_id'],
             'amount' => 0,
             'account_bank' => $profile['bank_account'],
@@ -229,7 +228,7 @@ class LoanController extends Controller
     ): RedirectResponse
     {
         $loanAmount = $amount; // Số tiền vay
-        $monthlyInterestRate = 0.008; // Lãi suất hàng tháng
+        $monthlyInterestRate = 0.01; // Lãi suất hàng tháng
         $numberOfMonths = $months; // Số tháng
 
         $payments = $this->calculatePayments($loanAmount, $monthlyInterestRate, $numberOfMonths);
@@ -242,25 +241,33 @@ class LoanController extends Controller
     }
 
     /**
-     * @param $principal
+     * @param $loanAmount
      * @param $monthlyInterestRate
      * @param $numberOfMonths
      * @return array
      */
-    private function calculatePayments($principal, $monthlyInterestRate, $numberOfMonths): array
+    private function calculatePayments($loanAmount, $monthlyInterestRate, $numberOfMonths): array
     {
-        $monthlyPayment = $principal * $monthlyInterestRate / (1 - pow(1 + $monthlyInterestRate, -$numberOfMonths));
+        $currentDate = now();
+        $runMonth = 1;
+
+        $monthlyOriginAmount = $loanAmount / $numberOfMonths;
+
+        $incAmount = ($loanAmount * $monthlyInterestRate) / $numberOfMonths;
 
         $payments = [];
-        $currentDate = now();
 
-        for ($i = 0; $i < $numberOfMonths; $i++) {
-            $payment = $monthlyPayment;
+        $random = 0.33;
+        $isRand = true;
+        while ($runMonth <= $numberOfMonths) {
+            $monthly = $monthlyOriginAmount + $incAmount + $incAmount * ($isRand ? $random : 1 - $random);
 
             $payments[] = [
-                'date' => $currentDate->copy()->addMonths($i)->format('Y-m-d'),
-                'amount' => round($payment, 2)
+                'date' => $currentDate->copy()->addMonths($runMonth)->format('Y-m-d'),
+                'amount' => round($monthly)
             ];
+            $isRand = ! $isRand;
+            $runMonth += 1;
         }
 
         return $payments;

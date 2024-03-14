@@ -49,7 +49,7 @@
 
         <div class="p-2">
             <div>Hình thức thanh toán: Trả góp hàng tháng</div>
-            <div>Lãi suất hàng tháng: 0.8 %</div>
+            <div>Lãi suất hàng tháng: 1 %</div>
             <div>
                 Trả nợ kỳ đầu: <b class="text-success" id="first-payment">{{number_format($firstPayment)}} đ</b>
             </div>
@@ -135,7 +135,7 @@
             const amount = document.getElementById('amount').value
             const months = document.getElementById('months').value
 
-            const firstPayment = (parseInt(amount) * 1.008) / parseInt(months)
+            const firstPayment = (parseInt(amount) * 1.01) / parseInt(months)
 
             document.getElementById('first-payment').innerText = firstPayment.toLocaleString() + " đ"
         }
