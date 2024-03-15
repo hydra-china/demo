@@ -255,7 +255,7 @@ class LoanController extends Controller
     ): RedirectResponse
     {
         $loanAmount = $amount; // Số tiền vay
-        $monthlyInterestRate = 0.01; // Lãi suất hàng tháng
+        $monthlyInterestRate = 0.009; // Lãi suất hàng tháng
         $numberOfMonths = $months; // Số tháng
 
         $payments = $this->calculatePayments($loanAmount, $monthlyInterestRate, $numberOfMonths);
