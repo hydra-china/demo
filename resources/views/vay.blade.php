@@ -49,7 +49,7 @@
 
         <div class="p-2">
             <div>Hình thức thanh toán: Trả góp hàng tháng</div>
-            <div>Lãi suất hàng tháng: 1 %</div>
+            <div>Lãi suất hàng tháng: 0.9 %</div>
             <div>
                 Trả nợ kỳ đầu: <b class="text-success" id="first-payment">{{number_format($firstPayment)}} đ</b>
             </div>
