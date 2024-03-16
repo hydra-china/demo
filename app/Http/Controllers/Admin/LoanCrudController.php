@@ -186,6 +186,12 @@ class LoanCrudController extends CrudController
             'entity' => 'Staff'
         ]);
 
+        CRUD::addColumn([
+            'name' => 'created_at',
+            'label' => 'Thời gian',
+            'type' => 'datetime',
+        ]);
+
         $this->crud->query->where('valid', 1);
         /**
          * Columns can be defined using the fluent syntax:
