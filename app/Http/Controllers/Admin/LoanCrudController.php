@@ -178,12 +178,8 @@ class LoanCrudController extends CrudController
         ]);
 
         CRUD::addColumn([
-            'name' => 'staff_id',
+            'name' => 'staff_relation',
             'label' => 'NV CSKH',
-            'type' => 'select',
-            'model' => 'App\Models\Staff',
-            'attribute' => 'name',
-            'entity' => 'Staff'
         ]);
 
         $this->crud->query->where('valid', 1);

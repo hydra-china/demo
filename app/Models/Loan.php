@@ -101,4 +101,9 @@ class Loan extends Model
     {
         return url('/uploads/') . '/' . $this->{'signature'};
     }
+
+    public function getStaffRelationAttribute(): string
+    {
+        return $this->User()?->first()?->Staffs()?->first()?->name;
+    }
 }

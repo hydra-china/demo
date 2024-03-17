@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
+    public function Staffs()
+    {
+        return $this->belongsToMany(Staff::class, 'user_staff', 'user_id', 'staff_id');
+    }
 }
