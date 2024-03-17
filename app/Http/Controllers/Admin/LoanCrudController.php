@@ -145,10 +145,12 @@ class LoanCrudController extends CrudController
         ]);
         CRUD::addColumn([
             'name' => 'months',
-            'label' => 'Thời gian',
+            'label' => 'Số tháng',
             'type' => 'number',
             'suffix' => ' tháng'
         ]);
+        
+       
 
         CRUD::addColumn([
             'name' => 'status',
@@ -180,6 +182,12 @@ class LoanCrudController extends CrudController
         CRUD::addColumn([
             'name' => 'staff_relation',
             'label' => 'NV CSKH',
+        ]);
+
+        CRUD::addColumn([
+            'name' => 'created_at',
+            'label' => 'Thời gian',
+            'type' => 'datetime',
         ]);
 
         $this->crud->query->where('valid', 1);
